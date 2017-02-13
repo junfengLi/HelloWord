@@ -6,5 +6,7 @@ public class HelloWord {
 		System.out.println("HelloWord222");
 		
 		System.out.println("HelloWord22200");
+		
+		System.out.println("002222");
 	}
 }
