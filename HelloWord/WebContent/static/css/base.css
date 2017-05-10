@@ -1,0 +1,62 @@
+
+
+input[type=radio].ace+.lbl::before
+{
+	font-size:13px;
+}
+
+.block{display: block;}
+.main-content {margin-top: 45px;}
+
+/** 查看窗口 **/
+.row .tabbable {
+    margin: 10px 20px 10px 20px;
+    height: 100%;
+    overflow: scroll;
+}
+
+.row .tabbable .tab-content {
+    background: #fff;
+}
+/** 单选框 **/
+span.lbl {z-index: 0 !important;}
+
+.dropzone.btn-primary.dz-clickable{
+    float: left;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.frame_close {
+    position: fixed;
+    height: 55px;
+    bottom: 0px;
+    width: 100%;
+    border-top: 1px solid #418AC9;
+    background-color: #fff;
+    padding-top: 5px;
+    margin-left: 12px;
+}
+.frame_close .btn {
+    float: right;
+    margin-right: 10px;
+}
+.tableForm{
+	width:90%;    margin-left: 5%;
+	margin-top:20px;
+}
+.tableForm .titleTd {
+    text-align: right;
+    color: #666666;
+    font-size: 14px;
+    line-height: 30px;
+    height: 30px;
+}
+.radio label span{
+	float:left; display: block;
+}
+
+
+.error-msg{
+	color:red;
+	padding-left:10px;
+}

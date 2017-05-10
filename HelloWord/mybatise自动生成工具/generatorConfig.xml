@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动包位置 -->
+    <classPathEntry    location="mysql-connector-java-5.1.25.jar"/>
+    <context id="DB2Tables"    targetRuntime="MyBatis3">
+    	<!-- 实现自定义的代码生成器plugin -->  
+        <plugin type="mybatis.PaginationPlugin" />  
+        <commentGenerator>  
+            <property name="suppressDate" value="true" />  
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->  
+            <property name="suppressAllComments" value="true" />  
+        </commentGenerator>  
+        <!-- 数据库链接URL、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/shiro?useUnicode=true" userId="root" password="mysql">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="com.web.manage.pojo" targetProject="../src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成的映射文件包名和位置 -->
+        <sqlMapGenerator targetPackage="com.web.manage.dao" targetProject="../src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置 -->
+        <!-- 手动写Dao继承父类 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.web.manage.dao" targetProject="../src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        	<!-- <property name="rootInterface" value="com.web.commons.dao.BaseDao"/> -->
+        </javaClientGenerator>
+        <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+         <table tableName="li_project_info" domainObjectName="Info" enableCountByExample="false" 
+        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+         <table tableName="li_project_speed" domainObjectName="Speed" enableCountByExample="false" 
+        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="li_project_online" domainObjectName="Online" enableCountByExample="false" 
+        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+    </context>
+</generatorConfiguration>
