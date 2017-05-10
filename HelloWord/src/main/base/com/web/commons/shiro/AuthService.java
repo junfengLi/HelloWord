@@ -29,5 +29,11 @@ public interface AuthService {
      * @return 
      */  
     public List<String> getRolesByUserName(String username);
+
+    /**
+     * 保存登录IP，地址，和时间
+     * @param user
+     */
+	public void save(User user);
    
 }

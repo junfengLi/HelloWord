@@ -17,7 +17,7 @@
 	<table  class="tableForm">
 		<c:if test="${not empty user }">
 		<tr>
-			<td width="30%" class="titleTd">
+			<td width="25%" class="titleTd">
 			登录名：
 			</td>
 			<td  width="50%">${user.loginname }
@@ -29,14 +29,14 @@
 		</c:if>
 		<c:if test="${empty user }">
 		<tr>
-			<td width="20%" class="titleTd">
+			<td width="25%" class="titleTd">
 			登录名：
 			</td>
-			<td  width="45%">
+			<td  width="50%">
 			<input type="text" id="loginname" name="loginname" placeholder="登录名"
 			  value="${user.loginname }" class="col-xs-12 col-sm-5" autocomplete="off" />
 			</td>
-			<td width="30%"></td>
+			<td width="15%"></td>
 		</tr>
 		<tr>
 			<td class="titleTd">密码：</td>
@@ -56,26 +56,9 @@
 		</tr>
 		</c:if>
 		<tr>
-			<td class="titleTd">性别：</td>
-			<td>
-				<div class="radio">
-					<label>
-						<input name="sex" type="radio" class="ace" value="1" checked="checked" />
-						<span class="lbl"></span><span>&nbsp;&nbsp;男&nbsp;&nbsp;</span>
-					</label>
-					<label>
-						<input name="sex" type="radio" class="ace" value="0"
-						 <c:if test="${user.sex == '0' }"> checked="checked" </c:if> />
-						<span class="lbl"></span><span>&nbsp;&nbsp;女&nbsp;&nbsp;</span>
-					</label>
-				</div>
-			</td>
-			<td></td>
-		</tr>
-		<tr>
 			<td class="titleTd">真实姓名：</td>
 			<td>
-			<input type="text" id="name" name="name" value="${user.name }"
+			<input type="text" id="realname" name="realname" value="${user.realname }"
 			 placeholder="真实姓名" class="col-xs-12 col-sm-5">
 			</td>
 			<td></td>
@@ -89,26 +72,21 @@
 			<td></td>
 		</tr>
 		<tr>
-			<td class="titleTd">地址：</td>
+			<td class="titleTd">邮箱：</td>
 			<td>
-			<input type="text" id="address" name="address" value="${user.address }"
-			 placeholder="地址" class="col-xs-12 col-sm-5">
-			</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td class="titleTd">排序：</td>
-			<td>
-			<input type="text" id="seq" name="seq" value="${user.seq }<c:if test="${empty user }">500</c:if>" 
-			 placeholder="排序" class="col-xs-12 col-sm-5">
+			<input type="text" id="email" name="email" value="${user.email }"
+			 placeholder="邮箱" class="col-xs-12 col-sm-5">
 			</td>
 			<td></td>
 		</tr>
 	</table>
 	<div class="frame_close">
 		<input type="hidden" name="id" value="${user.id }" />
+		<input type="hidden" name="loginip" value="${user.loginip }" />
+		<input type="hidden" name="loginplace" value="${user.loginplace }" />
+		<input type="hidden" name="logintime" value="${user.logintime }" />
 		<input type="hidden" name="createtime" value="${user.createtime }" />
-		<input type="hidden" name="isdelete" value="${user.isdelete }" />
+		<input type="hidden" name="status" value="${user.status }" />
 		<button class="btn btn-info" onclick="parent.closeFrame()" type="button"> 关闭</button>
 		<input type="submit" class="btn btn-primary" value="提交" />
 	</div>
@@ -154,7 +132,7 @@ jQuery(function($) {
 				required: true,
 				equalTo: "#password"
 			},
-			name:{
+			realname:{
 				required:true,
 				maxlength: 20
 			},
@@ -162,12 +140,10 @@ jQuery(function($) {
 				required:true,
 				mobile: true
 			},
-			address:{
-				maxlength:100,
-			},
-			seq:{
-				number:true,
-				rangelength:[3,3]
+			email:{
+				required:true,
+				email:true,
+				maxlength: 50
 			}
 		},
 		messages: {
@@ -185,7 +161,7 @@ jQuery(function($) {
 				required: "请输入确认密码",
 				equalTo: "确认密码不一致"
 			},
-			name:{
+			realname:{
 				required:"请输入真实姓名",
 				maxlength: "最多输入20个字符"
 			},
@@ -193,12 +169,10 @@ jQuery(function($) {
 				required:"请输入手机",
 				mobile: "手机格式不正确"
 			},
-			address:{
-				maxlength:"最多输入{0}个字符",
-			},
-			seq:{
-				number:"只能输入数字",
-				rangelength:"请输入一个{0}位数字"
+			email:{
+				required:"请输入邮箱",
+				email:"邮箱格式不正确",
+				maxlength:"最多输入{0}个字符"
 			}
 		},
 		errorPlacement: function(error, element) { //错误信息位置设置方法

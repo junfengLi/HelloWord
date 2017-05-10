@@ -68,6 +68,7 @@ public class UserAction {
     		Model model,HttpServletRequest request,HttpServletResponse response) {
     	if (StringUtils.isNotBlank(id)) {
 			User user = userService.findById(id);
+			user.setPassword(UrlBase64Utils.decode(user.getPassword()));
 			model.addAttribute("user", user);
 		}
     	
@@ -148,8 +149,8 @@ public class UserAction {
     	if (StringUtils.isNotBlank(id)) {
     		User user = userService.findById(id);
     		if (user != null) {
-    			String isDelete = "锁定".equals(open) ? IsOrEnum.SHI.getKey() : IsOrEnum.FOU.getKey();
-				user.setStatus(isDelete);
+    			String status = "锁定".equals(open) ? IsOrEnum.SHI.getKey() : IsOrEnum.FOU.getKey();
+				user.setStatus(status);
 				userService.saveUser(user);
 				resultMap.put("result", true);
 			} else {

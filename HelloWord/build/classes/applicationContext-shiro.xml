@@ -102,7 +102,9 @@
     </bean>  
     
     <!-- 自定义过滤器 -->
-	<bean id="myFormAuthenticationFilter" class="com.web.commons.shiro.filter.MyFormAuthenticationFilter" />  
+	<bean id="myFormAuthenticationFilter" class="com.web.commons.shiro.filter.MyFormAuthenticationFilterExtend" >  
+		<property name="authService" ref="authService" />  
+	</bean>  
     <!-- 自定义退出过滤器 -->
 	<bean id="logoutFilter" class="com.web.commons.shiro.filter.MyLogoutFilter" >  
 		<property name="redirectUrl" value="/loginForward" />

@@ -49,7 +49,7 @@
 						</li>
 
 						<li>
-							<a href="#" onclick="openFrame('查看信息','${ctx }/user/usershow/forward?id=${user.id }',400,320);" >
+							<a href="#" onclick="openFrame('查看信息','${ctx }/user/usershow/forward?id=${user.id }',500,420);" >
 								<i class="icon-user"></i>
 								个人资料
 							</a>
@@ -86,33 +86,92 @@
 				<li class="active">
 					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/manage/index/load">
 						<i class="icon-dashboard"></i>
-						<span class="menu-text"> 控制台 </span>
+						<span class="menu-text">控制台</span>
 					</a>
 				</li>
-				<%-- 
+				
 				<li class="">
-					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/info/query/load">
-						<i class="icon-group"></i>
-						<span class="menu-text"> 客户管理 </span>
+					<a href="#" class="dropdown-toggle">
+						<i class="icon-edit"></i>
+						<span class="menu-text"> 信息管理 </span>
+						<b class="arrow icon-angle-down"></b>
 					</a>
+					<ul class="submenu">
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/usermanage/index/load">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">微信信息管理</span>
+							</a>
+						</li>
+							<li class="">
+								<a href="javascript:void(0);" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/menu/query/forward?wechatId=${wechatId }">
+									<i class="icon-double-angle-right"></i>
+									自定义菜单管理
+								</a>
+							</li>
+						<c:if test="${wechat.wechatType != 'D_W'}">
+						</c:if>
+					</ul>
 				</li>
 				<li class="">
-					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/info/queryResult/load">
-						<i class="icon-bar-chart"></i>
-						<span class="menu-text"> 客户报表 </span>
+					<a href="#" class="dropdown-toggle">
+						<i class="icon-cloud"></i>
+						<span class="menu-text"> 自动回复管理 </span>
+						<b class="arrow icon-angle-down"></b>
 					</a>
-				</li> --%>
+					<ul class="submenu">
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/query/forward?wechatId=${wechatId }">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">普通消息处理</span>
+							</a>
+						</li>
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/special/forward?wechatId=${wechatId }">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">特殊消息处理</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="icon-desktop"></i>
+						<span class="menu-text"> 微站管理 </span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/base/forward?wechatId=${wechatId }">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">微站基本信息管理</span>
+							</a>
+						</li>
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/query/forward?wechatId=${wechatId }">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">模板管理</span>
+							</a>
+						</li>
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/banner/forward?wechatId=${wechatId }">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">幻灯片图片</span>
+							</a>
+						</li>
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/module/query/forward?wechatId=${wechatId }">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">模块列表</span>
+							</a>
+						</li>
+					</ul>
+				</li>
 				<shiro:hasPermission name="sys">
-				<%-- <li class="">
-					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/user/query/load">
-						<i class="icon-group"></i>
-						<span class="menu-text"> 用户管0理 </span>
-					</a>
-				</li> --%>
 				<li class="">
 					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/user/query/load">
 						<i class="icon-user"></i>
-						<span class="menu-text"> 用户管理 </span>
+						<span class="menu-text"> 用户管理</span>
 					</a>
 				</li>
 				</shiro:hasPermission>
@@ -137,9 +196,16 @@
 		var url = $(".nav-list").find("a.menu-text:first-child").attr("data-url");
 		LoadMainPage(url, 'main-content');
 		$('a.menu-text').click(function(){
+			$('.nav-list').find('.active').find('.submenu').hide();
+			//$('.active.open').click();
 			$('.nav-list').find('.active').removeClass('active');
+			$('.nav-list').find('.open').removeClass('open');
 			$(this).parent().addClass('active');
-		});		
+			if ($(this).parent().parent().hasClass('submenu')){
+				$(this).parent().parent().parent().addClass('active');
+				$(this).parent().parent().parent().addClass('open');
+			}
+		});	
 	});
 </script>
 </body>

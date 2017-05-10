@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.web.commons.util.IsOrEnum;
@@ -54,6 +55,18 @@ public class MyAuthServiceImpl implements MyAuthService {
 			list.add(role.getCode());
 		}
 		return list;
+	}
+	@Override
+	public void save(User user) {
+		if (StringUtils.isBlank(user.getStatus())) {
+			user.setStatus(IsOrEnum.FOU.getKey());
+		}
+		if (StringUtils.isBlank(user.getId())) {
+			user.setCreatetime(System.currentTimeMillis());
+			userDao.insertSelective(user);
+		} else {
+			userDao.updateByPrimaryKeySelective(user);
+		}
 	}  
 
 }

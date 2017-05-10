@@ -2,7 +2,7 @@
  * 全局的js变量
  */
 var contants = {
-	basePath : '/ssm'
+	basePath : '/abcd'
 		
 }
 

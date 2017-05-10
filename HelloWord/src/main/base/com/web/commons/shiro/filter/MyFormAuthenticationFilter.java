@@ -35,7 +35,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         String url = this.getSuccessUrl();
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + url);    //页面跳转
-        return false;
+        return true;
     }
 	
 	@Override
