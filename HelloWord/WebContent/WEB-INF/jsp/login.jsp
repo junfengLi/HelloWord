@@ -14,7 +14,7 @@
 <script type='text/javascript' src='${ctx }/static/js/login/jquery.particleground.min.js'></script>
 <link rel="stylesheet" href="${ctx }/static/css/login/login_bg.css" />
 </head>
-<body>
+<body style="zoom: 1;">
 <c:if test="${empty logout}">
 <div id="particles">
 	<div class="intro">

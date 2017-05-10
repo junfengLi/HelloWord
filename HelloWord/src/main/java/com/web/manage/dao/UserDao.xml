@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.manage.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="com.web.manage.pojo.User" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="groupId" property="groupid" jdbcType="VARCHAR" />
+    <result column="loginIp" property="loginip" jdbcType="VARCHAR" />
+    <result column="loginName" property="loginname" jdbcType="VARCHAR" />
+    <result column="loginPlace" property="loginplace" jdbcType="VARCHAR" />
+    <result column="loginTime" property="logintime" jdbcType="BIGINT" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="BIGINT" />
+    <result column="updateTime" property="updatetime" jdbcType="BIGINT" />
+    <collection property="roles" select="selectRoleByUser" column="id" ofType="Role"></collection>  
+  </resultMap>
+  
+   <resultMap type="com.web.manage.pojo.Role" id="RoleResult">  
+	    <id column="ID" property="id" jdbcType="VARCHAR" />
+	    <result column="NAME" property="name" jdbcType="VARCHAR" />
+	    <result column="CODE" property="code" jdbcType="VARCHAR" />
+	    <result column="CREATETIME" property="createtime" jdbcType="BIGINT" />
+	     <collection property="permissions" select="selectPermissionByRole" column="id" ofType="Permission"></collection>  
+    </resultMap>  
+	<resultMap type="com.web.manage.pojo.Permission" id="PermissionResult">  
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="NOTE" property="note" jdbcType="VARCHAR" />
+	</resultMap>  
+  
+    <select id="selectRoleByUser" parameterType="java.lang.String" resultMap="RoleResult">  
+	    SELECT r.* from wx_sys_role r LEFT JOIN wx_sys_user_role j on r.id= j.role_id  WHERE j.user_id = #{id,jdbcType=VARCHAR} 
+    </select>  
+    <select id="selectPermissionByRole" parameterType="java.lang.String" resultMap="PermissionResult">  
+	    SELECT p.* from wx_sys_permission p LEFT JOIN wx_sys_role_permission j on p.id= j.permission_id  WHERE j.role_id = #{id,jdbcType=VARCHAR} 
+    </select>  
+  
+
+  <sql id="Base_Column_List" >
+    id, email, groupId, loginIp, loginName, loginPlace, loginTime, password, realName, 
+    status, mobile, createTime, updateTime
+  </sql>
+
+  <sql id="whereFields" >
+    <where >
+      <if test="email != null" >
+         and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="groupid != null" >
+         and groupId = #{groupid,jdbcType=VARCHAR}
+      </if>
+      <if test="loginip != null" >
+         and loginIp = #{loginip,jdbcType=VARCHAR}
+      </if>
+      <if test="loginname != null" >
+         and loginName = #{loginname,jdbcType=VARCHAR}
+      </if>
+      <if test="loginplace != null" >
+         and loginPlace = #{loginplace,jdbcType=VARCHAR}
+      </if>
+      <if test="logintime != null" >
+         and loginTime = #{logintime,jdbcType=BIGINT}
+      </if>
+      <if test="password != null" >
+         and password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="realname != null" >
+         and realName = #{realname,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null" >
+         and status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null" >
+         and mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="createtime != null" >
+         and createTime = #{createtime,jdbcType=BIGINT}
+      </if>
+      <if test="updatetime != null" >
+         and updateTime = #{updatetime,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByStatement" resultMap="BaseResultMap" parameterType="com.web.manage.pojo.User" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_sys_user
+    <include refid="whereFields" />
+     order by updateTime desc
+     limit #{offset},#{rows} 
+  </select>
+
+  <select id="selectByStatementCount" resultType="int" parameterType="com.web.manage.pojo.User" >
+    select count(1) from wx_sys_user
+    <include refid="whereFields" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.web.manage.pojo.User" useGeneratedKeys="true" keyProperty="id" >
+  <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+    insert into wx_sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="groupid != null" >
+        groupId,
+      </if>
+      <if test="loginip != null" >
+        loginIp,
+      </if>
+      <if test="loginname != null" >
+        loginName,
+      </if>
+      <if test="loginplace != null" >
+        loginPlace,
+      </if>
+      <if test="logintime != null" >
+        loginTime,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="realname != null" >
+        realName,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginip != null" >
+        #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginplace != null" >
+        #{loginplace,jdbcType=VARCHAR},
+      </if>
+      <if test="logintime != null" >
+        #{logintime,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.manage.pojo.User" >
+    update wx_sys_user
+    <set >
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        groupId = #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginip != null" >
+        loginIp = #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        loginName = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginplace != null" >
+        loginPlace = #{loginplace,jdbcType=VARCHAR},
+      </if>
+      <if test="logintime != null" >
+        loginTime = #{logintime,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

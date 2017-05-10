@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="/WEB-INF/tld/tool.tld" prefix="tool" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html lang="en">
@@ -21,26 +22,36 @@
 			<td  width="40%">${user.loginname }
 		</tr>
 		<tr>
-			<td class="titleTd">性别：</td>
-			<td><c:if test="${user.sex == '0' }">女</c:if>
-				 <c:if test="${user.sex == '1' }">男</c:if>
-			 </td>
-		</tr>
-		<tr>
 			<td class="titleTd">真实姓名：</td>
-			<td>${user.name }</td>
+			<td>${user.realname }</td>
 		</tr>
 		<tr>
 			<td class="titleTd">手机：</td>
 			<td>${user.mobile }</td>
 		</tr>
 		<tr>
-			<td class="titleTd">地址：</td>
-			<td>${user.address }</td>
+			<td class="titleTd">邮箱：</td>
+			<td>${user.email }</td>
 		</tr>
 		<tr>
-			<td class="titleTd">排序：</td>
-			<td>${user.seq }</td>
+			<td class="titleTd">上次登录IP：</td>
+			<td>${user.loginip }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">上次登录地点：</td>
+			<td>${user.loginplace }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">上次登录时间：</td>
+			<td>${tool:getFormatDate(user.logintime)}</td>
+		</tr>
+		<tr>
+			<td class="titleTd">创建时间：</td>
+			<td>${tool:getFormatDate(user.createtime)}</td>
+		</tr>
+		<tr>
+			<td class="titleTd">上次更新时间：</td>
+			<td>${tool:getFormatDate(user.updatetime)}</td>
 		</tr>
 	</table>
 	<div class="frame_close">

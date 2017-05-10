@@ -14,7 +14,7 @@
             <property name="suppressAllComments" value="true" />  
         </commentGenerator>  
         <!-- 数据库链接URL、用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/shiro?useUnicode=true" userId="root" password="mysql">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://121.43.104.88:3306/demo?useUnicode=true" userId="demo" password="qiaoyan">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -35,11 +35,7 @@
         	<!-- <property name="rootInterface" value="com.web.commons.dao.BaseDao"/> -->
         </javaClientGenerator>
         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-         <table tableName="li_project_info" domainObjectName="Info" enableCountByExample="false" 
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-         <table tableName="li_project_speed" domainObjectName="Speed" enableCountByExample="false" 
-        enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="li_project_online" domainObjectName="Online" enableCountByExample="false" 
+         <table tableName="wx_sys_user" domainObjectName="User" enableCountByExample="false" 
         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>

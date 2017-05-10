@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+	default-lazy-init="true">  
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>    
+    <!-- 缓存管理 -->  
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
+	</bean>
+    <!-- <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"></bean> -->    
+     <!-- 继承自AuthorizingRealm的自定义Realm --> 
+    <bean id="authService" class="com.web.manage.service.impl.MyAuthServiceImpl"></bean>  
+    <bean id="myShiroRealm" class="com.web.commons.shiro.MyShiroRealm">  
+        <property name="authService" ref="authService" />  
+         <property name="credentialsMatcher" ref="credentialsMatcher"/>   
+    </bean>  
+    
+    <bean id="credentialsMatcher" class="com.web.commons.shiro.PasswordMatcher" />  
+    <!-- 会话管理器 -->
+    <bean id="shiroSessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="globalSessionTimeout" value="12000000"/>
+        <property name="deleteInvalidSessions" value="true"/>
+		<property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+    </bean>
+    <!-- 会话Cookie模板 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="sid"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="-1"/>
+    </bean>
+	<!-- 会话验证调度器 -->
+    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+        <property name="sessionValidationInterval" value="10000000"/>
+        <property name="sessionManager" ref="shiroSessionManager"/>
+    </bean>
+    <bean id="sessionDAO" class="com.web.commons.shiro.CurSessionDAO">
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+    </bean>
+    <!-- 会话ID生成器 -->
+    <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+  
+    <!-- Shiro安全管理器 -->  
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
+        <property name="realm" ref="myShiroRealm"></property>  
+        <property name="cacheManager" ref="cacheManager"></property>  
+        <property name="sessionManager" ref="shiroSessionManager"/>
+    </bean>  
+
+	<!-- 验证码过滤器 --> 
+	<bean id="jCaptchaValidateFilter"   
+	  class="com.web.commons.shiro.filter.JCaptchaValidateFilter">  
+	    <property name="jcaptchaEbabled" value="false"/>  
+	    <property name="jcaptchaParam" value="jcaptchaCode"/>  
+	    <property name="failureKeyAttribute" value="shiroLoginFailure"/>  
+	</bean>  
+
+    <!--   
+       Shiro主过滤器本身功能十分强大，其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行  
+       Web应用中，Shiro可控制的Web请求必须经过Shiro主过滤器的拦截，Shiro对基于Spring的Web应用提供了完美的支持   
+    -->  
+    <!-- 
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+     --> 
+    <bean id="shiroFilter" class="com.web.commons.shiro.MyShiroFilterFactoryBean">  
+        <!-- Shiro的核心安全接口，这个属性是必须的 -->  
+        <property name="securityManager" ref="securityManager"></property>  
+        <!-- 要求登录时的链接(登录页面地址)，非必须的属性，默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->  
+        <property name="loginUrl" value="/login"></property>  
+        <!-- 登录成功后要跳转的连接(本例中此属性用不到，因为登录成功后的处理逻辑在LoginController里硬编码) -->  
+        <property name="successUrl" value="/manage"/> 
+        <!-- 用户访问未对其授权的资源时，所显示的连接 -->  
+        <property name="unauthorizedUrl" value="/loginForward"></property>  
+        <property name="filters">
+            <util:map>
+            	<entry key="logout" value-ref="logoutFilter"/>  
+            	<entry key="jCaptchaValidate" value-ref="jCaptchaValidateFilter" />
+                <entry key="authc" value-ref="myFormAuthenticationFilter"/>
+            </util:map>
+        </property>
+        <property name="filterChainDefinitions">  
+            <value>  
+            	/ = anon
+                /index = anon
+                /loginForward = anon
+                /static/**=anon  
+                /index/*=anon 
+                /imageCode=anon
+                /jcaptcha*=anon
+                /login=jCaptchaValidate,authc
+                /logout = logout
+                /**=authc  
+            </value>  
+        </property>  
+    </bean>  
+    
+    <!-- 自定义过滤器 -->
+	<bean id="myFormAuthenticationFilter" class="com.web.commons.shiro.filter.MyFormAuthenticationFilter" />  
+    <!-- 自定义退出过滤器 -->
+	<bean id="logoutFilter" class="com.web.commons.shiro.filter.MyLogoutFilter" >  
+		<property name="redirectUrl" value="/loginForward" />
+	</bean>
+</beans> 

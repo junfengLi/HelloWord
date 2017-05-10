@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>客户记录管理系统</title>
+<title>开发者信息管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="include/css-js.jsp" />
@@ -23,7 +23,7 @@
 			<a href="#" class="navbar-brand">
 				<small>
 					<i class="icon-leaf"></i>
-					投融界客户记录管理系统
+					开发者信息管理系统
 				</small>
 			</a><!-- /.brand -->
 		</div><!-- /.navbar-header -->
@@ -34,7 +34,7 @@
 						<img class="nav-user-photo" src="${ctx}/static/ace/avatars/user.jpg" />
 						<span class="user-info">
 							<small>欢迎光临</small>
-							${user.name }
+							${user.realname }
 						</span>
 
 						<i class="icon-caret-down"></i>
@@ -84,11 +84,12 @@
 			</script>
 			<ul class="nav nav-list">
 				<li class="active">
-					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/project/index/load">
+					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/manage/index/load">
 						<i class="icon-dashboard"></i>
-						<span class="menu-text"> 客户总览 </span>
+						<span class="menu-text"> 控制台 </span>
 					</a>
 				</li>
+				<%-- 
 				<li class="">
 					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/info/query/load">
 						<i class="icon-group"></i>
@@ -100,7 +101,7 @@
 						<i class="icon-bar-chart"></i>
 						<span class="menu-text"> 客户报表 </span>
 					</a>
-				</li>
+				</li> --%>
 				<shiro:hasPermission name="sys">
 				<%-- <li class="">
 					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/user/query/load">
@@ -109,7 +110,7 @@
 					</a>
 				</li> --%>
 				<li class="">
-					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/user/query2/load">
+					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/user/query/load">
 						<i class="icon-user"></i>
 						<span class="menu-text"> 用户管理 </span>
 					</a>
