@@ -12,115 +12,66 @@
 <title></title>
 </head>
 <body>
-<div id="queryDiv" class="easyui-layout" data-options="fit:true">
-	<div data-options="cache:false,region:'center',border:false">
-	<div id="particles">
-		<div class="intro">
-			<div class="manage-main">
-				<div class="manage-top">
-					微信基本信息
-					<h2><a href="###" onclick="refreshUrl('contentIndexDiv','${ctx}/user/wechatEdit/forward?wechatId=${wechat.wechatid }')">编辑</a></h2>
-				</div>
-				<div class="manage-content">
-					<div class="manage-con-right">
-						<div class="m-hr"></div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>微信原始ID：
-								</div>
-								<div class="input-con">
-									${wechat.wechatid }
-								</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>微信名称：
-								</div>
-								<div class="input-con">
-									${wechat.wechatname }
-								</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>微信AppId：
-								</div>
-								<div class="input-con">
-									${wechat.appid }
-								</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>微信appSecred：
-								</div>
-								<div class="input-con">
-									${wechat.appsecred }
-								</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>公众号类型：
-								</div>
-								<div class="input-con">
-									<div id="wechat_type_text">${wechatTypeDesc }</div>
-								</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>粉丝数：
-								</div>
-								<div class="input-con">
-									${wechat.wechatfans }
-								</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>微信号：
-								</div>
-								<div class="input-con">
-									${wechat.wechatnumber }
-								</div>
-							</div>
-							<div class="input-box input-box-image">
-								<div class="con-t">
-												<span>*</span>公众号头像：
-								</div>
-								<div class="input-con">
-									<div style="padding-right:10px;float:left;">
-										<img id="photoImg" width="80" height="80" 
-										style="display: block;"
-										<c:choose>
-									 		<c:when test="${not empty accessory}">   
-										    	src="${accessory.url}" 
-										  	</c:when>
-										  	<c:otherwise>   
-										    	src="${ctx }/static/images/link/link.jpg" 
-										  	</c:otherwise> 
-										</c:choose>
-										/>
-									</div>
-								</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>开发者接口地址：
-								</div>
-								<div class="input-con">${tool:getOpenUrl(wechat.wechatid)}</div>
-							</div>
-							<div class="input-box">
-								<div class="con-t">
-									<span>*</span>开发者token：
-								</div>
-								<div class="input-con">
-									qbtest
-								</div>
-							</div>
-							</div>
-					</div>
-				</div>
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-block alert-success">
+				<span>微信基本信息</span>
+				<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/usermanage/edit/load?wechatId=${wechat.wechatid }">
+					<span class="icon-cogs"> 编辑 </span>
+				</a>
 			</div>
-		</div>
-	</div>
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+	<table  class="tableForm">
+		<tr>
+			<td width="30%" class="titleTd">微信原始ID：</td>
+			<td  width="60%">
+				${wechat.wechatid }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">微信名称：</td>
+			<td>${wechat.wechatname }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">微信AppId：</td>
+			<td>${wechat.appid }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">微信AppSecred：</td>
+			<td>${wechat.appsecred }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">公众号类型：</td>
+			<td>${wechatTypeDesc }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">公众号头像：</td>
+			<td>
+			<div class="row">
+			<c:if test="${not empty accessory}"> 
+			  <img id="photoImg" width="80" height="80" style="display: block;" src="${accessory.url}" />
+			</c:if>
+			</div><!-- /.row -->
+			</td>
+		</tr>
+		<tr>
+			<td class="titleTd">初始粉丝数：</td>
+			<td>${wechat.wechatfans }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">微信号：</td>
+			<td>${wechat.wechatnumber }</td>
+		</tr>
+		<tr>
+			<td class="titleTd">开发者接口地址：</td>
+			<td>${tool:getOpenUrl(wechat.wechatid)}</td>
+		</tr>
+		<tr>
+			<td class="titleTd">开发者token：</td>
+			<td>qbtest</td>
+		</tr>
+	</table>
 </div>
-
 </body>
 </html>

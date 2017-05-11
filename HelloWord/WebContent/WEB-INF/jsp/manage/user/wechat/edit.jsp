@@ -27,13 +27,13 @@
 			<c:if test="${empty wechat }">
 			<td  width="30%">
 				<input type="text" id="wechatid" name="wechatid" placeholder="微信原始ID"
-			  	value="${info.name }" class="col-xs-12 col-sm-10" autocomplete="off" />
+			  	 class="col-xs-12 col-sm-10" autocomplete="off" />
 		  	</td>
 		  	<td width="35%">【微信原始ID填写后不能修改】</td>
 			</c:if>
 			<c:if test="${!empty wechat}">
 			<td  width="30%">
-				${wechat.wechatId }【微信原始ID不能修改】
+				${wechat.wechatid }【微信原始ID不能修改】
 				<input type="hidden" name="wechatid" value="${wechat.wechatid }" />
 			</td>
 			<td width="35%"></td>
@@ -78,7 +78,7 @@
 			<%-- <c:if test="${not empty accessory}"> 
 			  <img id="photoImg" width="80" height="80" style="display: block;" src="${accessory.url}" />
 			</c:if> --%>
-				<div class="col-xs-12">
+				<div class="col-xs-12 col-sm-10" >
 					<div id="dropzone">
 						<div class="fallback"></div>
 						<div class="dropzone"></div>
@@ -105,10 +105,13 @@
 			<td></td>
 		</tr>
 	</table>
-	<div class="frame_close">
-		<input type="hidden" name="id" value="${wechat.id }" />
-		<input type="hidden" name="userid" value="${userId }" />
-		<input type="submit" class="btn btn-primary" value="提交" />
+	<div class="row">
+		<div class="col-xs-6" ></div>
+		<div class="col-xs-6" >
+			<input type="hidden" name="id" value="${wechat.id }" />
+			<input type="hidden" name="userid" value="${userId }" />
+			<input type="submit" class="btn btn-primary" value="提交" />
+		</div>
 	</div>
 	</form>
 </div>
@@ -118,7 +121,7 @@
 	layui.use(['layer', 'form'], function(){
 		layer = layui.layer;
 	});
-	var hasWechat = '${empty wechat }';
+	var hasWechat = '${not empty wechat }';
 	var hasAccessory = '${not empty accessory}';
 	jQuery(function($){
 		 $('#userForm').validate({
@@ -130,16 +133,18 @@
 		        },
 				rules: {
 					wechatid: {
-						required: hasWechat == 'true',
+						required: true,
 						maxlength: 16
 					},
 					wechatname:{
 						maxlength:50
 					},
 					appid:{
+						required:true,
 						maxlength:18
 					},
 					appsecred:{
+						required:true,
 						maxlength:32
 					},
 					wechatnumber:{
@@ -152,16 +157,18 @@
 				},
 				messages: {
 					wechatid:{
-						required:"微信原始ID",
+						required:"请输入微信原始ID",
 						maxlength: "最多输入{0}个字符"
 					},
 					wechatname:{
 						maxlength:"最多输入{0}个字符"
 					},
 					appid:{
+						required:"请输入微信appid",
 						maxlength:"最多输入{0}个字符"
 					},
 					appsecred:{
+						required:"请输入微信appsecred",
 						maxlength:"最多输入{0}个字符"
 					},
 					wechatnumber:{
@@ -231,7 +238,7 @@
 		if(appId != '' && appSecred != ''){
 			$.post('${ctx}/usermanage/wechatCheckAppId',{appId:appId,appSecred:appSecred},function(data){
 				if(data.success){
-					$("#wechat_type").val(data.wechattype);
+					$("#wechattype").val(data.wechattype);
 					$("#wechat_type_text").html(data.desc);
 				} else {
 					$("#appId").val('');
@@ -242,7 +249,11 @@
 		}
 	}
 	function submitHandler(obj){
-		window.location.href='${ctx}/manage';
+		if (hasWechat == 'true') {
+			LoadMainPage('${ctx }/usermanage/show/load?wechatId=${wechat.wechatid }','main-content');
+		} else {
+			window.location.href='${ctx}/manage?addWechat=1';
+		}
 	}
 	</script>
 </body>

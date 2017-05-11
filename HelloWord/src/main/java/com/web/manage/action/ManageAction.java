@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,12 +30,13 @@ public class ManageAction {
 	
 	private static final String BASE_PATH = "/manage/main/";
     @RequestMapping({"/manage"})  
-    public String index(Model model) {  
+    public String index(Model model,@RequestParam(value="addWechat", defaultValue="") String addWechat) {  
 		String loginName = CommonUtil.getLoginName();
 		User user = userService.findByLoginName(loginName);
 		model.addAttribute("user", user);
 		Wechat wechat = wechatService.findByUserId(loginName);
 		model.addAttribute("wechat", wechat);
+		model.addAttribute("addWechat", addWechat);
 		return "/manage/index";  
     }
 
