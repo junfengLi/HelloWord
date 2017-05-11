@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.wechat.dao.MenuButtonDao" >
+  <resultMap id="BaseResultMap" type="com.web.wechat.pojo.MenuButton" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="wechatId" property="wechatid" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="buttonType" property="buttontype" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="menuKey" property="menukey" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="buttonSort" property="buttonsort" jdbcType="VARCHAR" />
+    <result column="isOAuth" property="isoauth" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, wechatId, pid, buttonType, name, menuKey, url, buttonSort, isOAuth
+  </sql>
+
+  <sql id="whereFields" >
+    <where >
+      <if test="wechatid != null" >
+         and wechatId = #{wechatid,jdbcType=VARCHAR}
+      </if>
+      <if test="pid != null" >
+         and pid = #{pid,jdbcType=VARCHAR}
+      </if>
+      <if test="buttontype != null" >
+         and buttonType = #{buttontype,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+         and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="menukey != null" >
+         and menuKey = #{menukey,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null" >
+         and url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="buttonsort != null" >
+         and buttonSort = #{buttonsort,jdbcType=VARCHAR}
+      </if>
+      <if test="isoauth != null" >
+         and isOAuth = #{isoauth,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_wechat_menubutton
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByStatement" resultMap="BaseResultMap" parameterType="com.web.wechat.pojo.MenuButton" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_wechat_menubutton
+    <include refid="whereFields" />
+     limit #{offset},#{rows} 
+  </select>
+
+  <select id="selectByStatementCount" resultType="int" parameterType="com.web.wechat.pojo.MenuButton" >
+    select count(1) from wx_wechat_menubutton
+    <include refid="whereFields" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_wechat_menubutton
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.web.wechat.pojo.MenuButton" useGeneratedKeys="true" keyProperty="id" >
+   <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+    insert into wx_wechat_menubutton
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wechatid != null" >
+        wechatId,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="buttontype != null" >
+        buttonType,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="menukey != null" >
+        menuKey,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="buttonsort != null" >
+        buttonSort,
+      </if>
+      <if test="isoauth != null" >
+        isOAuth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatid != null" >
+        #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="buttontype != null" >
+        #{buttontype,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="menukey != null" >
+        #{menukey,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonsort != null" >
+        #{buttonsort,jdbcType=VARCHAR},
+      </if>
+      <if test="isoauth != null" >
+        #{isoauth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.wechat.pojo.MenuButton" >
+    update wx_wechat_menubutton
+    <set >
+      <if test="wechatid != null" >
+        wechatId = #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="buttontype != null" >
+        buttonType = #{buttontype,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="menukey != null" >
+        menuKey = #{menukey,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonsort != null" >
+        buttonSort = #{buttonsort,jdbcType=VARCHAR},
+      </if>
+      <if test="isoauth != null" >
+        isOAuth = #{isoauth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

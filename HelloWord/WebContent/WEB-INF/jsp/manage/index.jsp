@@ -89,7 +89,7 @@
 						<span class="menu-text">控制台</span>
 					</a>
 				</li>
-				
+				<c:if test="${ empty wechat }">
 				<li class="">
 					<a href="#" class="dropdown-toggle">
 						<i class="icon-edit"></i>
@@ -98,7 +98,24 @@
 					</a>
 					<ul class="submenu">
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/usermanage/index/load">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/usermanage/edit/load">
+								<i class="icon-double-angle-right"></i>
+								<span class="menu-text">微信信息管理</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				</c:if>
+				<c:if test="${not empty wechat }">
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="icon-edit"></i>
+						<span class="menu-text"> 信息管理 </span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li class="" >
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/usermanage/show/load?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">微信信息管理</span>
 							</a>
@@ -109,7 +126,7 @@
 									自定义菜单管理
 								</a>
 							</li>
-						<c:if test="${wechat.wechatType != 'D_W'}">
+						<c:if test="${wechat.wechattype != 'D_W'}">
 						</c:if>
 					</ul>
 				</li>
@@ -167,6 +184,7 @@
 						</li>
 					</ul>
 				</li>
+				</c:if>
 				<shiro:hasPermission name="sys">
 				<li class="">
 					<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx }/user/query/load">
@@ -196,14 +214,17 @@
 		var url = $(".nav-list").find("a.menu-text:first-child").attr("data-url");
 		LoadMainPage(url, 'main-content');
 		$('a.menu-text').click(function(){
-			$('.nav-list').find('.active').find('.submenu').hide();
-			//$('.active.open').click();
-			$('.nav-list').find('.active').removeClass('active');
-			$('.nav-list').find('.open').removeClass('open');
-			$(this).parent().addClass('active');
-			if ($(this).parent().parent().hasClass('submenu')){
-				$(this).parent().parent().parent().addClass('active');
-				$(this).parent().parent().parent().addClass('open');
+			if (!$(this).parent().hasClass('active')){
+				if (!$(this).parent().parent().parent().hasClass('active')) {
+					$('.nav-list').find('.active').find('.submenu').hide();
+					$('.nav-list').find('.open').removeClass('open');
+				}
+				$('.nav-list').find('.active').removeClass('active');
+				$(this).parent().addClass('active');
+				if ($(this).parent().parent().hasClass('submenu')){
+					$(this).parent().parent().parent().addClass('active');
+					$(this).parent().parent().parent().addClass('open');
+				}
 			}
 		});	
 	});

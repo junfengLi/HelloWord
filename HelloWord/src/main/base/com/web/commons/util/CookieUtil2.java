@@ -7,7 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CookieUtil {
+public class CookieUtil2 {
 	public static final String USERID = "userId";
 	public static final String ADMINID = "adminId";
 	public static final String LOGINNAME = "loginName";		//前台用户使用，用来区分附件文件夹名

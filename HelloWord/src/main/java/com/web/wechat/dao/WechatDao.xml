@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.wechat.dao.WechatDao" >
+  <resultMap id="BaseResultMap" type="com.web.wechat.pojo.Wechat" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="VARCHAR" />
+    <result column="wechatId" property="wechatid" jdbcType="VARCHAR" />
+    <result column="indexDemo" property="indexdemo" jdbcType="VARCHAR" />
+    <result column="listDemo" property="listdemo" jdbcType="VARCHAR" />
+    <result column="contentDemo" property="contentdemo" jdbcType="VARCHAR" />
+    <result column="wechatName" property="wechatname" jdbcType="VARCHAR" />
+    <result column="headerPic" property="headerpic" jdbcType="VARCHAR" />
+    <result column="wechatFans" property="wechatfans" jdbcType="VARCHAR" />
+    <result column="wechatNumber" property="wechatnumber" jdbcType="VARCHAR" />
+    <result column="wechatType" property="wechattype" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="BIGINT" />
+    <result column="updateTime" property="updatetime" jdbcType="BIGINT" />
+    <result column="appId" property="appid" jdbcType="VARCHAR" />
+    <result column="appSecred" property="appsecred" jdbcType="VARCHAR" />
+    <result column="expiresIn" property="expiresin" jdbcType="BIGINT" />
+    <result column="accessToken" property="accesstoken" jdbcType="VARCHAR" />
+    <result column="jsapiTicketToken" property="jsapitickettoken" jdbcType="VARCHAR" />
+    <result column="expiresInJs" property="expiresinjs" jdbcType="BIGINT" />
+    <result column="authorizerAccessToken" property="authorizeraccesstoken" jdbcType="VARCHAR" />
+    <result column="authTokenExpiresIn" property="authtokenexpiresin" jdbcType="BIGINT" />
+    <result column="authRefreshToken" property="authrefreshtoken" jdbcType="VARCHAR" />
+    <result column="funcInfo" property="funcinfo" jdbcType="VARCHAR" />
+    <result column="qrcodeUrl" property="qrcodeurl" jdbcType="VARCHAR" />
+    <result column="businessInfo" property="businessinfo" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, userId, wechatId, indexDemo, listDemo, contentDemo, wechatName, headerPic, wechatFans, 
+    wechatNumber, wechatType, createTime, updateTime, appId, appSecred, expiresIn, accessToken, 
+    jsapiTicketToken, expiresInJs, authorizerAccessToken, authTokenExpiresIn, authRefreshToken, 
+    funcInfo, qrcodeUrl, businessInfo
+  </sql>
+
+  <sql id="whereFields" >
+    <where >
+      <if test="userid != null" >
+         and userId = #{userid,jdbcType=VARCHAR}
+      </if>
+      <if test="wechatid != null" >
+         and wechatId = #{wechatid,jdbcType=VARCHAR}
+      </if>
+      <if test="indexdemo != null" >
+         and indexDemo = #{indexdemo,jdbcType=VARCHAR}
+      </if>
+      <if test="listdemo != null" >
+         and listDemo = #{listdemo,jdbcType=VARCHAR}
+      </if>
+      <if test="contentdemo != null" >
+         and contentDemo = #{contentdemo,jdbcType=VARCHAR}
+      </if>
+      <if test="wechatname != null" >
+         and wechatName = #{wechatname,jdbcType=VARCHAR}
+      </if>
+      <if test="headerpic != null" >
+         and headerPic = #{headerpic,jdbcType=VARCHAR}
+      </if>
+      <if test="wechatfans != null" >
+         and wechatFans = #{wechatfans,jdbcType=VARCHAR}
+      </if>
+      <if test="wechatnumber != null" >
+         and wechatNumber = #{wechatnumber,jdbcType=VARCHAR}
+      </if>
+      <if test="wechattype != null" >
+         and wechatType = #{wechattype,jdbcType=VARCHAR}
+      </if>
+      <if test="createtime != null" >
+         and createTime = #{createtime,jdbcType=BIGINT}
+      </if>
+      <if test="updatetime != null" >
+         and updateTime = #{updatetime,jdbcType=BIGINT}
+      </if>
+      <if test="appid != null" >
+         and appId = #{appid,jdbcType=VARCHAR}
+      </if>
+      <if test="appsecred != null" >
+         and appSecred = #{appsecred,jdbcType=VARCHAR}
+      </if>
+      <if test="expiresin != null" >
+         and expiresIn = #{expiresin,jdbcType=BIGINT}
+      </if>
+      <if test="accesstoken != null" >
+         and accessToken = #{accesstoken,jdbcType=VARCHAR}
+      </if>
+      <if test="jsapitickettoken != null" >
+         and jsapiTicketToken = #{jsapitickettoken,jdbcType=VARCHAR}
+      </if>
+      <if test="expiresinjs != null" >
+         and expiresInJs = #{expiresinjs,jdbcType=BIGINT}
+      </if>
+      <if test="authorizeraccesstoken != null" >
+         and authorizerAccessToken = #{authorizeraccesstoken,jdbcType=VARCHAR}
+      </if>
+      <if test="authtokenexpiresin != null" >
+         and authTokenExpiresIn = #{authtokenexpiresin,jdbcType=BIGINT}
+      </if>
+      <if test="authrefreshtoken != null" >
+         and authRefreshToken = #{authrefreshtoken,jdbcType=VARCHAR}
+      </if>
+      <if test="funcinfo != null" >
+         and funcInfo = #{funcinfo,jdbcType=VARCHAR}
+      </if>
+      <if test="qrcodeurl != null" >
+         and qrcodeUrl = #{qrcodeurl,jdbcType=VARCHAR}
+      </if>
+      <if test="businessinfo != null" >
+         and businessInfo = #{businessinfo,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_sys_wechat
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByStatement" resultMap="BaseResultMap" parameterType="com.web.wechat.pojo.Wechat" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_sys_wechat
+    <include refid="whereFields" />
+     limit #{offset},#{rows} 
+  </select>
+
+  <select id="selectByStatementCount" resultType="int" parameterType="com.web.wechat.pojo.Wechat" >
+    select count(1) from wx_sys_wechat
+    <include refid="whereFields" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_sys_wechat
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByUserId" parameterType="java.lang.String" >
+    delete from wx_sys_wechat
+    where userid = #{userid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.web.wechat.pojo.Wechat" useGeneratedKeys="true" keyProperty="id" >
+  <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+    insert into wx_sys_wechat
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="wechatid != null" >
+        wechatId,
+      </if>
+      <if test="indexdemo != null" >
+        indexDemo,
+      </if>
+      <if test="listdemo != null" >
+        listDemo,
+      </if>
+      <if test="contentdemo != null" >
+        contentDemo,
+      </if>
+      <if test="wechatname != null" >
+        wechatName,
+      </if>
+      <if test="headerpic != null" >
+        headerPic,
+      </if>
+      <if test="wechatfans != null" >
+        wechatFans,
+      </if>
+      <if test="wechatnumber != null" >
+        wechatNumber,
+      </if>
+      <if test="wechattype != null" >
+        wechatType,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="appid != null" >
+        appId,
+      </if>
+      <if test="appsecred != null" >
+        appSecred,
+      </if>
+      <if test="expiresin != null" >
+        expiresIn,
+      </if>
+      <if test="accesstoken != null" >
+        accessToken,
+      </if>
+      <if test="jsapitickettoken != null" >
+        jsapiTicketToken,
+      </if>
+      <if test="expiresinjs != null" >
+        expiresInJs,
+      </if>
+      <if test="authorizeraccesstoken != null" >
+        authorizerAccessToken,
+      </if>
+      <if test="authtokenexpiresin != null" >
+        authTokenExpiresIn,
+      </if>
+      <if test="authrefreshtoken != null" >
+        authRefreshToken,
+      </if>
+      <if test="funcinfo != null" >
+        funcInfo,
+      </if>
+      <if test="qrcodeurl != null" >
+        qrcodeUrl,
+      </if>
+      <if test="businessinfo != null" >
+        businessInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatid != null" >
+        #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="indexdemo != null" >
+        #{indexdemo,jdbcType=VARCHAR},
+      </if>
+      <if test="listdemo != null" >
+        #{listdemo,jdbcType=VARCHAR},
+      </if>
+      <if test="contentdemo != null" >
+        #{contentdemo,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatname != null" >
+        #{wechatname,jdbcType=VARCHAR},
+      </if>
+      <if test="headerpic != null" >
+        #{headerpic,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatfans != null" >
+        #{wechatfans,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatnumber != null" >
+        #{wechatnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="wechattype != null" >
+        #{wechattype,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appsecred != null" >
+        #{appsecred,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresin != null" >
+        #{expiresin,jdbcType=BIGINT},
+      </if>
+      <if test="accesstoken != null" >
+        #{accesstoken,jdbcType=VARCHAR},
+      </if>
+      <if test="jsapitickettoken != null" >
+        #{jsapitickettoken,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresinjs != null" >
+        #{expiresinjs,jdbcType=BIGINT},
+      </if>
+      <if test="authorizeraccesstoken != null" >
+        #{authorizeraccesstoken,jdbcType=VARCHAR},
+      </if>
+      <if test="authtokenexpiresin != null" >
+        #{authtokenexpiresin,jdbcType=BIGINT},
+      </if>
+      <if test="authrefreshtoken != null" >
+        #{authrefreshtoken,jdbcType=VARCHAR},
+      </if>
+      <if test="funcinfo != null" >
+        #{funcinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeurl != null" >
+        #{qrcodeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="businessinfo != null" >
+        #{businessinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.wechat.pojo.Wechat" >
+    update wx_sys_wechat
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatid != null" >
+        wechatId = #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="indexdemo != null" >
+        indexDemo = #{indexdemo,jdbcType=VARCHAR},
+      </if>
+      <if test="listdemo != null" >
+        listDemo = #{listdemo,jdbcType=VARCHAR},
+      </if>
+      <if test="contentdemo != null" >
+        contentDemo = #{contentdemo,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatname != null" >
+        wechatName = #{wechatname,jdbcType=VARCHAR},
+      </if>
+      <if test="headerpic != null" >
+        headerPic = #{headerpic,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatfans != null" >
+        wechatFans = #{wechatfans,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatnumber != null" >
+        wechatNumber = #{wechatnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="wechattype != null" >
+        wechatType = #{wechattype,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null" >
+        appId = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appsecred != null" >
+        appSecred = #{appsecred,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresin != null" >
+        expiresIn = #{expiresin,jdbcType=BIGINT},
+      </if>
+      <if test="accesstoken != null" >
+        accessToken = #{accesstoken,jdbcType=VARCHAR},
+      </if>
+      <if test="jsapitickettoken != null" >
+        jsapiTicketToken = #{jsapitickettoken,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresinjs != null" >
+        expiresInJs = #{expiresinjs,jdbcType=BIGINT},
+      </if>
+      <if test="authorizeraccesstoken != null" >
+        authorizerAccessToken = #{authorizeraccesstoken,jdbcType=VARCHAR},
+      </if>
+      <if test="authtokenexpiresin != null" >
+        authTokenExpiresIn = #{authtokenexpiresin,jdbcType=BIGINT},
+      </if>
+      <if test="authrefreshtoken != null" >
+        authRefreshToken = #{authrefreshtoken,jdbcType=VARCHAR},
+      </if>
+      <if test="funcinfo != null" >
+        funcInfo = #{funcinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeurl != null" >
+        qrcodeUrl = #{qrcodeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="businessinfo != null" >
+        businessInfo = #{businessinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

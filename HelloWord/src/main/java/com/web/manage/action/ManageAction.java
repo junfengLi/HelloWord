@@ -14,22 +14,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.commons.shiro.Account;
+import com.web.commons.util.CommonUtil;
 import com.web.manage.pojo.User;
 import com.web.manage.service.UserService;
+import com.web.wechat.pojo.Wechat;
+import com.web.wechat.service.WechatService;
 
 @Controller
 public class ManageAction {  
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private WechatService wechatService;
 	
 	private static final String BASE_PATH = "/manage/main/";
     @RequestMapping({"/manage"})  
     public String index(Model model) {  
-    	Subject subject = SecurityUtils.getSubject();
-		Account account  = (Account)subject.getPrincipal();
-		String loginName = account.getLoginName();
+		String loginName = CommonUtil.getLoginName();
 		User user = userService.findByLoginName(loginName);
 		model.addAttribute("user", user);
+		Wechat wechat = wechatService.findByUserId(loginName);
+		model.addAttribute("wechat", wechat);
 		return "/manage/index";  
     }
 

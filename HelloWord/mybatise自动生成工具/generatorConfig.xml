@@ -20,22 +20,22 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!-- 生成模型的包名和位置 -->
-        <javaModelGenerator targetPackage="com.web.manage.pojo" targetProject="../src/main/java">
+        <javaModelGenerator targetPackage="com.web.wechat.pojo" targetProject="../src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!-- 生成的映射文件包名和位置 -->
-        <sqlMapGenerator targetPackage="com.web.manage.dao" targetProject="../src/main/java">
+        <sqlMapGenerator targetPackage="com.web.wechat.dao" targetProject="../src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!-- 生成DAO的包名和位置 -->
         <!-- 手动写Dao继承父类 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.web.manage.dao" targetProject="../src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.web.wechat.dao" targetProject="../src/main/java">
             <property name="enableSubPackages" value="true"/>
         	<!-- <property name="rootInterface" value="com.web.commons.dao.BaseDao"/> -->
         </javaClientGenerator>
         <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-         <table tableName="wx_sys_user" domainObjectName="User" enableCountByExample="false" 
+        <table tableName="wx_wechat_message_img" domainObjectName="MessageImg" enableCountByExample="false" 
         enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>

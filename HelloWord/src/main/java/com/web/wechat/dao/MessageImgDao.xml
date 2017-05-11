@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.wechat.dao.MessageImgDao" >
+  <resultMap id="BaseResultMap" type="com.web.wechat.pojo.MessageImg" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="BIGINT" />
+    <result column="updateTime" property="updatetime" jdbcType="BIGINT" />
+    <result column="demo" property="demo" jdbcType="VARCHAR" />
+    <result column="seeNum" property="seenum" jdbcType="VARCHAR" />
+    <result column="isSite" property="issite" jdbcType="VARCHAR" />
+    <result column="isMenu" property="ismenu" jdbcType="VARCHAR" />
+    <result column="isMessage" property="ismessage" jdbcType="VARCHAR" />
+    <result column="keywordId" property="keywordid" jdbcType="VARCHAR" />
+    <result column="menuUid" property="menuuid" jdbcType="VARCHAR" />
+    <result column="wechatId" property="wechatid" jdbcType="VARCHAR" />
+    <result column="setUrl" property="seturl" jdbcType="VARCHAR" />
+    <result column="imgSort" property="imgsort" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="ResultMapWithBLOBs" type="com.web.wechat.pojo.MessageImg" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, title, description, image, createTime, updateTime, demo, seeNum, isSite, isMenu, 
+    isMessage, keywordId, menuUid, wechatId, setUrl, imgSort
+  </sql>
+
+  <sql id="whereFields" >
+    <where >
+      <if test="title != null" >
+         and title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null" >
+         and description = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test="image != null" >
+         and image = #{image,jdbcType=VARCHAR}
+      </if>
+      <if test="createtime != null" >
+         and createTime = #{createtime,jdbcType=BIGINT}
+      </if>
+      <if test="updatetime != null" >
+         and updateTime = #{updatetime,jdbcType=BIGINT}
+      </if>
+      <if test="demo != null" >
+         and demo = #{demo,jdbcType=VARCHAR}
+      </if>
+      <if test="seenum != null" >
+         and seeNum = #{seenum,jdbcType=VARCHAR}
+      </if>
+      <if test="issite != null" >
+         and isSite = #{issite,jdbcType=VARCHAR}
+      </if>
+      <if test="ismenu != null" >
+         and isMenu = #{ismenu,jdbcType=VARCHAR}
+      </if>
+      <if test="ismessage != null" >
+         and isMessage = #{ismessage,jdbcType=VARCHAR}
+      </if>
+      <if test="keywordid != null" >
+         and keywordId = #{keywordid,jdbcType=VARCHAR}
+      </if>
+      <if test="menuuid != null" >
+         and menuUid = #{menuuid,jdbcType=VARCHAR}
+      </if>
+      <if test="wechatid != null" >
+         and wechatId = #{wechatid,jdbcType=VARCHAR}
+      </if>
+      <if test="seturl != null" >
+         and setUrl = #{seturl,jdbcType=VARCHAR}
+      </if>
+      <if test="imgsort != null" >
+         and imgSort = #{imgsort,jdbcType=VARCHAR}
+      </if>
+      <if test="content != null" >
+         and content = #{content,jdbcType=LONGVARCHAR}
+      </if>
+       <if test="updatetime1 != null" >
+         and updatetime &gt; #{updatetime1,jdbcType=BIGINT}
+      </if>
+      <if test="updatetime2 != null" >
+         and updatetime &lt; #{updatetime2,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wx_wechat_message_img
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectMaxUid" resultType="java.lang.String" parameterType="com.web.wechat.pojo.MessageImg" >
+    SELECT MAX(i.menuUid) FROM wx_wechat_message_img i
+    <include refid="whereFields" />
+  </select>
+
+  <select id="selectByStatement" resultMap="ResultMapWithBLOBs" parameterType="com.web.wechat.pojo.MessageImg" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wx_wechat_message_img
+    <include refid="whereFields" />
+     order by imgsort desc
+     limit #{offset},#{rows} 
+  </select>
+
+  <select id="selectByStatementCount" resultType="int" parameterType="com.web.wechat.pojo.MessageImg" >
+    select count(1) from wx_wechat_message_img
+    <include refid="whereFields" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_wechat_message_img
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  	<delete id="deleteByPid" parameterType="java.lang.String" >
+    delete from wx_wechat_message_img
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.web.wechat.pojo.MessageImg" useGeneratedKeys="true" keyProperty="id" >
+   <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+    insert into wx_wechat_message_img
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="demo != null" >
+        demo,
+      </if>
+      <if test="seenum != null" >
+        seeNum,
+      </if>
+      <if test="issite != null" >
+        isSite,
+      </if>
+      <if test="ismenu != null" >
+        isMenu,
+      </if>
+      <if test="ismessage != null" >
+        isMessage,
+      </if>
+      <if test="keywordid != null" >
+        keywordId,
+      </if>
+      <if test="menuuid != null" >
+        menuUid,
+      </if>
+      <if test="wechatid != null" >
+        wechatId,
+      </if>
+      <if test="seturl != null" >
+        setUrl,
+      </if>
+      <if test="imgsort != null" >
+        imgSort,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="demo != null" >
+        #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="seenum != null" >
+        #{seenum,jdbcType=VARCHAR},
+      </if>
+      <if test="issite != null" >
+        #{issite,jdbcType=VARCHAR},
+      </if>
+      <if test="ismenu != null" >
+        #{ismenu,jdbcType=VARCHAR},
+      </if>
+      <if test="ismessage != null" >
+        #{ismessage,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordid != null" >
+        #{keywordid,jdbcType=VARCHAR},
+      </if>
+      <if test="menuuid != null" >
+        #{menuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatid != null" >
+        #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="seturl != null" >
+        #{seturl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsort != null" >
+        #{imgsort,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.wechat.pojo.MessageImg" >
+    update wx_wechat_message_img
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="demo != null" >
+        demo = #{demo,jdbcType=VARCHAR},
+      </if>
+      <if test="seenum != null" >
+        seeNum = #{seenum,jdbcType=VARCHAR},
+      </if>
+      <if test="issite != null" >
+        isSite = #{issite,jdbcType=VARCHAR},
+      </if>
+      <if test="ismenu != null" >
+        isMenu = #{ismenu,jdbcType=VARCHAR},
+      </if>
+      <if test="ismessage != null" >
+        isMessage = #{ismessage,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordid != null" >
+        keywordId = #{keywordid,jdbcType=VARCHAR},
+      </if>
+      <if test="menuuid != null" >
+        menuUid = #{menuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatid != null" >
+        wechatId = #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="seturl != null" >
+        setUrl = #{seturl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgsort != null" >
+        imgSort = #{imgsort,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.web.wechat.pojo.MessageImg" >
+    update wx_wechat_message_img
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=BIGINT},
+      updateTime = #{updatetime,jdbcType=BIGINT},
+      demo = #{demo,jdbcType=VARCHAR},
+      seeNum = #{seenum,jdbcType=VARCHAR},
+      isSite = #{issite,jdbcType=VARCHAR},
+      isMenu = #{ismenu,jdbcType=VARCHAR},
+      isMessage = #{ismessage,jdbcType=VARCHAR},
+      keywordId = #{keywordid,jdbcType=VARCHAR},
+      menuUid = #{menuuid,jdbcType=VARCHAR},
+      wechatId = #{wechatid,jdbcType=VARCHAR},
+      setUrl = #{seturl,jdbcType=VARCHAR},
+      imgSort = #{imgsort,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

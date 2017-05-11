@@ -4,7 +4,7 @@ input[type=radio].ace+.lbl::before
 {
 	font-size:13px;
 }
-
+.dropzone{padding:0px;     min-height: 234px;}
 .block{display: block;}
 .main-content {margin-top: 45px;}
 
@@ -21,11 +21,11 @@ input[type=radio].ace+.lbl::before
 /** 单选框 **/
 span.lbl {z-index: 0 !important;}
 
-.dropzone.btn-primary.dz-clickable{
+/* .dropzone.btn-primary.dz-clickable{
     float: left;
     padding: 5px 10px;
     cursor: pointer;
-}
+} */
 .frame_close {
     position: fixed;
     height: 55px;

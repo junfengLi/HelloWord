@@ -43,6 +43,6 @@ public class MyFormAuthenticationFilterExtend extends
 			// 在线用户
 
 		}
-		return !res;
+		return res;
 	}
 }

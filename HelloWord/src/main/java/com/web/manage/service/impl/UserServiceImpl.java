@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UIPage getPage(User user, int pageNumber, int pageSize) {
-		UIPage page = new UIPage();
+		UIPage page = new UIPage(String.valueOf(pageSize));
 		List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
 		long count = userDao.selectByStatementCount(user);
 		user.setRows(pageSize);

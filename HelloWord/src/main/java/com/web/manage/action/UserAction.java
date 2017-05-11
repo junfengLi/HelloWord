@@ -22,13 +22,15 @@ import com.web.commons.util.IsOrEnum;
 import com.web.commons.util.UrlBase64Utils;
 import com.web.manage.pojo.User;
 import com.web.manage.service.UserService;
+import com.web.wechat.service.WechatService;
 
 @RequestMapping("/user")  
 @Controller
 public class UserAction {  
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private WechatService wechatService;
 	
 	private static final String BASE_PATH = "/manage/sys/user/";
 

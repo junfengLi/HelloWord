@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.upload.dao.AccessoryDao" >
+  <resultMap id="BaseResultMap" type="com.web.upload.pojo.Accessory" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="BIGINT" />
+    <result column="fileSize" property="filesize" jdbcType="VARCHAR" />
+    <result column="linkId" property="linkid" jdbcType="VARCHAR" />
+    <result column="miniType" property="minitype" jdbcType="VARCHAR" />
+    <result column="module" property="module" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="text1" property="text1" jdbcType="VARCHAR" />
+    <result column="text2" property="text2" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, createTime, fileSize, linkId, miniType, module, name, text1, text2, url
+  </sql>
+
+  <sql id="whereFields" >
+    <where >
+      <if test="createtime != null" >
+         and createTime = #{createtime,jdbcType=BIGINT}
+      </if>
+      <if test="filesize != null" >
+         and fileSize = #{filesize,jdbcType=VARCHAR}
+      </if>
+      <if test="linkid != null" >
+         and linkId = #{linkid,jdbcType=VARCHAR}
+      </if>
+      <if test="minitype != null" >
+         and miniType = #{minitype,jdbcType=VARCHAR}
+      </if>
+      <if test="module != null" >
+         and module = #{module,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+         and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="text1 != null" >
+         and text1 = #{text1,jdbcType=VARCHAR}
+      </if>
+      <if test="text2 != null" >
+         and text2 = #{text2,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null" >
+         and url = #{url,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_accessory
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByStatement" resultMap="BaseResultMap" parameterType="com.web.upload.pojo.Accessory" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_accessory
+    <include refid="whereFields" />
+     limit #{offset},#{rows} 
+  </select>
+
+  <select id="selectByStatementCount" resultType="int" parameterType="com.web.upload.pojo.Accessory" >
+    select count(1) from wx_accessory
+    <include refid="whereFields" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_accessory
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.web.upload.pojo.Accessory" useGeneratedKeys="true" keyProperty="id" >
+   <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+    insert into wx_accessory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="filesize != null" >
+        fileSize,
+      </if>
+      <if test="linkid != null" >
+        linkId,
+      </if>
+      <if test="minitype != null" >
+        miniType,
+      </if>
+      <if test="module != null" >
+        module,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="text1 != null" >
+        text1,
+      </if>
+      <if test="text2 != null" >
+        text2,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="filesize != null" >
+        #{filesize,jdbcType=VARCHAR},
+      </if>
+      <if test="linkid != null" >
+        #{linkid,jdbcType=VARCHAR},
+      </if>
+      <if test="minitype != null" >
+        #{minitype,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="text1 != null" >
+        #{text1,jdbcType=VARCHAR},
+      </if>
+      <if test="text2 != null" >
+        #{text2,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.upload.pojo.Accessory" >
+    update wx_accessory
+    <set >
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="filesize != null" >
+        fileSize = #{filesize,jdbcType=VARCHAR},
+      </if>
+      <if test="linkid != null" >
+        linkId = #{linkid,jdbcType=VARCHAR},
+      </if>
+      <if test="minitype != null" >
+        miniType = #{minitype,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        module = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="text1 != null" >
+        text1 = #{text1,jdbcType=VARCHAR},
+      </if>
+      <if test="text2 != null" >
+        text2 = #{text2,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

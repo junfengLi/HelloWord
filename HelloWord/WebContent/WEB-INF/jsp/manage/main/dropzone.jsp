@@ -26,7 +26,8 @@
 	jQuery(function($){
 	Dropzone.autoDiscover = false;
 	try {
-	  $(".dropzone").dropzone({
+		var myDropzone = new Dropzone(".dropzone", {
+	  //$(".dropzone").dropzone({
 		  url: "${ctx}/accessory/upload?module=test",
 	    paramName: "file", // The name that will be used to transfer the file
 	    thumbnailWidth: 80,
@@ -39,6 +40,12 @@
 		addRemoveLinks : true,
 		dictDefaultMessage:'上传',
 		init: function() {
+			var mockFile = {name: "myiamge.jpg",size: 12345,type: 'image/jpeg'};
+			this.addFile.call (this,mockFile);
+			
+			this.options.thumbnail.call (this,mockFile,"http://edms.kitesky.com/upload/image/20170422/52edf3c2aabf171315d968d9af814d0c.jpg"); 
+			
+			//添加数据源给mock图片
 		    this.on("success", function(file) {
                 console.log("File " + file.name + "uploaded");
             });
@@ -55,6 +62,11 @@
 	  alert('Dropzone.js does not support older browsers!');
 	}
 	
+	var mockFile = { name: "123.jpg", accepted:true };
+	myDropzone.emit("addedfile", mockFile);
+	myDropzone.emit("thumbnail", mockFile, "http://edms.kitesky.com/upload/image/20170422/52edf3c2aabf171315d968d9af814d0c.jpg");
+	myDropzone.emit("complete", mockFile);
+	myDropzone.options.maxFiles = myDropzone.options.maxFiles - 1;
 	});
 </script>
 </body>

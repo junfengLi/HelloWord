@@ -21,4 +21,18 @@
         <function-class>com.web.commons.util.DateUtil</function-class>
         <function-signature>java.lang.String getFormatDateTime(long)</function-signature>
     </function>
+    
+    
+    <function>
+        <description>获取开发者接口地址</description>
+        <name>getOpenUrl</name>
+        <function-class>com.web.commons.util.CommonTag</function-class>
+        <function-signature>java.lang.String getOpenUrl(java.lang.String)</function-signature>
+    </function>
+     <function>
+        <description>获取开发者接口地址</description>
+        <name>getWsiteUrl</name>
+        <function-class>com.web.commons.util.CommonTag</function-class>
+        <function-signature>java.lang.String getWsiteUrl(java.lang.String)</function-signature>
+    </function>
 </taglib>

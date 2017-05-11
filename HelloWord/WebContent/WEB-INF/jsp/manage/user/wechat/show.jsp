@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="/WEB-INF/tld/common.tld" prefix="common" %>
+<%@ taglib uri="/WEB-INF/tld/tool.tld" prefix="tool" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -19,7 +19,7 @@
 			<div class="manage-main">
 				<div class="manage-top">
 					微信基本信息
-					<h2><a href="###" onclick="refreshUrl('contentIndexDiv','${ctx}/user/wechatEdit/forward?wechatId=${wechat.wechatId }')">编辑</a></h2>
+					<h2><a href="###" onclick="refreshUrl('contentIndexDiv','${ctx}/user/wechatEdit/forward?wechatId=${wechat.wechatid }')">编辑</a></h2>
 				</div>
 				<div class="manage-content">
 					<div class="manage-con-right">
@@ -29,7 +29,7 @@
 									<span>*</span>微信原始ID：
 								</div>
 								<div class="input-con">
-									${wechat.wechatId }
+									${wechat.wechatid }
 								</div>
 							</div>
 							<div class="input-box">
@@ -37,7 +37,7 @@
 									<span>*</span>微信名称：
 								</div>
 								<div class="input-con">
-									${wechat.wechatName }
+									${wechat.wechatname }
 								</div>
 							</div>
 							<div class="input-box">
@@ -45,7 +45,7 @@
 									<span>*</span>微信AppId：
 								</div>
 								<div class="input-con">
-									${wechat.appId }
+									${wechat.appid }
 								</div>
 							</div>
 							<div class="input-box">
@@ -53,7 +53,7 @@
 									<span>*</span>微信appSecred：
 								</div>
 								<div class="input-con">
-									${wechat.appSecred }
+									${wechat.appsecred }
 								</div>
 							</div>
 							<div class="input-box">
@@ -69,7 +69,7 @@
 									<span>*</span>粉丝数：
 								</div>
 								<div class="input-con">
-									${wechat.wechatFans }
+									${wechat.wechatfans }
 								</div>
 							</div>
 							<div class="input-box">
@@ -77,7 +77,7 @@
 									<span>*</span>微信号：
 								</div>
 								<div class="input-con">
-									${wechat.wechatNumber }
+									${wechat.wechatnumber }
 								</div>
 							</div>
 							<div class="input-box input-box-image">
@@ -104,9 +104,7 @@
 								<div class="con-t">
 									<span>*</span>开发者接口地址：
 								</div>
-								<div class="input-con">
-									${common:getOpenUrl(wechat.wechatId)}
-								</div>
+								<div class="input-con">${tool:getOpenUrl(wechat.wechatid)}</div>
 							</div>
 							<div class="input-box">
 								<div class="con-t">

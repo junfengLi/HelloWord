@@ -39,7 +39,7 @@ public class AccessoryAction {
     public Map<String, Object> upload(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-			String uploadPath = "2017company_demo/";
+			String uploadPath = "2017wechat/";
                 String module = request.getParameter("module")==null?"editor":request.getParameter("module");
                 String maxSizeStr = request.getParameter("maxSize")==null?"4194304":request.getParameter("maxSize");
                 String fileType = request.getParameter("fileType")==null?"all":request.getParameter("fileType");

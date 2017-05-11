@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.wechat.dao.MessageImageDao" >
+  <resultMap id="BaseResultMap" type="com.web.wechat.pojo.MessageImage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="wechatId" property="wechatid" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="mediaId" property="mediaid" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="BIGINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, wechatId, pid, mediaId, image, createTime
+  </sql>
+
+  <sql id="whereFields" >
+    <where >
+      <if test="wechatid != null" >
+         and wechatId = #{wechatid,jdbcType=VARCHAR}
+      </if>
+      <if test="pid != null" >
+         and pid = #{pid,jdbcType=VARCHAR}
+      </if>
+      <if test="mediaid != null" >
+         and mediaId = #{mediaid,jdbcType=VARCHAR}
+      </if>
+      <if test="image != null" >
+         and image = #{image,jdbcType=VARCHAR}
+      </if>
+      <if test="createtime != null" >
+         and createTime = #{createtime,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_wechat_message_image
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByStatement" resultMap="BaseResultMap" parameterType="com.web.wechat.pojo.MessageImage" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_wechat_message_image
+    <include refid="whereFields" />
+     limit #{offset},#{rows} 
+  </select>
+
+  <select id="selectByStatementCount" resultType="int" parameterType="com.web.wechat.pojo.MessageImage" >
+    select count(1) from wx_wechat_message_image
+    <include refid="whereFields" />
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_wechat_message_image
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPid" parameterType="java.lang.String" >
+    delete from wx_wechat_message_image
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.web.wechat.pojo.MessageImage" useGeneratedKeys="true" keyProperty="id" >
+   <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+    insert into wx_wechat_message_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wechatid != null" >
+        wechatId,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="mediaid != null" >
+        mediaId,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatid != null" >
+        #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaid != null" >
+        #{mediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.wechat.pojo.MessageImage" >
+    update wx_wechat_message_image
+    <set >
+      <if test="wechatid != null" >
+        wechatId = #{wechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaid != null" >
+        mediaId = #{mediaid,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>
