@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.aliyun.oss.OSSClient;
 
-public class OssUploadUtil {
+public class OssUploadUtil23 {
 	
 	
 	public static void main(String[] args) {

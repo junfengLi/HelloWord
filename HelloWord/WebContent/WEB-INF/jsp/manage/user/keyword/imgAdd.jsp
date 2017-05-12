@@ -98,6 +98,13 @@ function submitHandler(obj){
 	}
 }
 jQuery(function($) {
+	
+	var uploadFiles = [];
+	$("#picture-select").change(function () {
+	    $.each(this.files, function (index, fileObj) {
+	        uploadFiles.push(fileObj);
+	    });
+	});
 	$('#editor1').ace_wysiwyg().prev().addClass('wysiwyg-style2');
 	/* {
 		toolbar:
@@ -139,8 +146,26 @@ jQuery(function($) {
 	 $('#userForm').validate({
 		focusInvalid: false,
 		submitHandler: function() {  
+			// 点击提交后处理: 
+			for (var i = 0; i < uploadFiles.length; i++) {
+			    var fileObj = uploadFiles[i];
+			    // 判断图片是否存在
+			    readFileIntoDataUrl(fileObj).done(function (dataUrl) {
+			        var imgTag = $("#editor").find("img[src='" + dataUrl + "']");
+			        if (imgTag.length > 0) {
+			            // 图片存在, 上传当前文件.
+			            // uploadImage方法为你的上传图片方法.
+			            var url = uploadImage(fileObj);
+			            imgTag.attr("src", url);
+			        }
+			    });
+			}
+			
+			
 			$("#content").val($("#editor1").html());
-			 formSubmit('userForm');
+			debugger;
+			alert($("#editor1").html());
+			// formSubmit('userForm');
         },
 		rules: {
 			keyword: {
@@ -167,16 +192,27 @@ jQuery(function($) {
 		try {
 		  $(".dropzone").dropzone({
 			  url: "${ctx}/accessory/upload?module=wechatHead",
-		    paramName: "file", // The name that will be used to transfer the file
+			//最大文件大小，单位是 MB  
+		    maxFilesize: 5,  
+		    //默认false。如果设为true，则会给文件添加上传取消和删除预览图片的链接  
+		    addRemoveLinks: true,  
+		    //指明允许上传的文件类型，格式是逗号分隔的 MIME type 或者扩展名。例如：image/*,application/pdf,.psd,.obj  
+		    acceptedFiles: "image/*",  
+
 		    thumbnailWidth: 80,
 			thumbnailHeight: 80,
 			parallelUploads: 20,
 			autoQueue: false, // Make sure the files aren't queued until manually added
 			clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
-			maxFiles: 1,
-	        maxFilesize: 2,	// MB
-			addRemoveLinks : true,
 			dictDefaultMessage:'上传',
+			dictFileTooBig: "图片最大5M",  
+			dictInvalidFileType: "只能上传图片",  
+			dictRemoveFile: "移除",  
+			
+		    dictDefaultMessage: "拖拽图片或者点击",  
+		    dictFileTooBig: "图片最大5M",  
+		    dictInvalidFileType: "只能上传图片",  
+		    dictRemoveFile: "移除",  
 			init: function() {
 				if (hasAccessory == 'true') {
 					var mockFile = {name: '${accessory.name}',size: '${accessory.filesize}'};
