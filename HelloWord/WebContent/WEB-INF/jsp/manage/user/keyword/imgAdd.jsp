@@ -5,133 +5,217 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<jsp:include page="../css-js.jsp"></jsp:include>
+<jsp:include page="../../include/css-js.jsp" />
 </head>
 <body>
-	<div id="AdvanceDiv" class="easyui-layout" data-options="fit:true">
-<form id="messageImgForm" method="post" action="${ctx }/user/keyword/save">
-	<div data-options="region:'center',cache:false,border:false">
-		<table class="tableForm">
-			<tr >
-				<td width="20%" class="titleTd " >关键词：</td>
-				<td  colspan="3" >
-				<input class="easyui-validatebox" style="width:340px" name="keyword" id="keyword" 
-				data-options="required:true,validType:'maxlength[100]'" onblur="checkKeyword()" value="${keyword.keyword }"/>
-				<span style="color: #FA413F;">多个关键词用“，”隔开</span>
-				</td>
-			</tr>
-			<tr >
-				<td class="titleTd" width="20%">标题：<font color="red">*</font></td>
-				<td colspan="3" width="70%" >
-				<input class="easyui-validatebox" type="text" name="title" 
-				style="width:340px;"  value="${messageImg.title }"
-				data-options="required:true,tipPosition:'right',validType:'maxlength[100]'"></td>
-			</tr>		
-			<tr>
-				<td class="titleTd">模板样式：<font color="red">*</font></td>
-				<td >
-				<input class="easyui-combobox" 
-							name="demo" 
-							data-options="required:true,
-									url:'${ctx}/user/wsite/demoTree?demoType=content',
-									valueField:'id',
-									textField:'text',
-									editable:false,
-									panelHeight:'auto',
-									value:'${wechat.contentDemo }'
-							">
-				</td>
-			</tr>										
-			<tr>
-			<td class="titleTd">封图：</td>
-			<td colspan="3">
-				<input type="hidden" id="accessoryIds" name="accessoryIds"/>
-				<div style="padding-right:10px;float:left;">
-					<img id="photoImg" width="200" height="80" 
-					style="display: block;"
-					<c:choose>
-				 		<c:when test="${not empty accessory}">   
-					    	src="${accessory.url}" 
-					  	</c:when>
-					  	<c:otherwise>   
-					    	src="${ctx }/static/images/wechat/wechat_photo.png" 
-					  	</c:otherwise> 
-					</c:choose>
-					/></div>
-					<div style=" width:150px;float:left; height:25px;text-align: center;    margin-top: 15px;">
-					<input type="button" id="uploadButton" value="上传照片" />
-					<span style="  width:150px;  display: block;  text-align: center;  color: red;
-					  padding-top: 9px;"> * 单图文建议图片尺寸（200x50）</span>
-				</div>
-			</td>	
-			</tr>
-			<tr>
-				<td class="titleTd">简介：</td>
-				<td colspan="3"><textarea style="width:400px;padding:5px;"
-						rows="3" id="description" name="description"
-						data-options="required:true,validType:'maxlength[500]'">${messageImg.description }</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td class="titleTd">外链地址：</td>
-				<td colspan="3"><input class="easyui-validatebox"
-					name="setUrl" id="setUrl" style="width:340px;"  value="${messageImg.setUrl }"
-					data-options="validType:['url','maxlength[510]']">
-				<span style="color:#FA413F;">不填跳转站内链接</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4" align="center"><textarea style="width: 670px;"
-						rows="5" id="content" name="content"
-						data-options="captions:'内容'">${messageImg.content }</textarea></td>
-			</tr>
-		</table>
+<div class="row">
+	<form action="${ctx }/keyword/save" id="userForm" method="post">
+	<table  class="tableForm">
+		<tr>
+			<td width="15%" class="titleTd">关键词：</td>
+			<td  width="30%">
+			<input type="text" id="keyword" name="keyword" placeholder="关键词"
+			  value="${keyword.keyword }" class="col-xs-12" autocomplete="off" />
+			</td>
+			<td width="15%" rowspan="5" class="titleTd">缩略图：</td>
+			<td  width="30%" rowspan="5">
+			<div class="row" >
+			<input type="hidden" name="accessoryIds" id="accessoryIds" />
+				<div class="col-xs-10" >
+					<div id="dropzone">
+						<div class="fallback"></div>
+						<div class="dropzone"></div>
+					</div><!-- PAGE CONTENT ENDS -->
+					<div class="fileinput-button icon-cloud-upload btn btn-info">上传照片</div>
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+			</td>
+		</tr>	
+		<tr >
+			<td class="titleTd">模板样式：</td>
+			<td>
+				<select class="form-control input-small" id="form-field-select-1" name="pid" style="width:120px;">
+					<c:forEach items="${nodes }" var="node" >
+						<option value="${node.id }" <c:if test="${node.id == button.pid}"> selected="selected"</c:if> >${node.text }</option>
+					</c:forEach>
+				</select>
+			</td>
+		</tr>	
+		<tr>
+		<td width="15%" class="titleTd">标题：</td>
+			<td width="30%"><input type="text" id="title" name="title" placeholder="标题"
+				value="${messageImg.title }" class="col-xs-12" autocomplete="off" /></td>
+		</tr>	
+		<tr>
+			<td class="titleTd">简介：</td>
+			<td>
+			<textarea id="form-field-11" name="description" class="autosize-transition form-control" placeholder="简介"
+			 style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 70px;margin: 2px 0px;">${messageImg.description}</textarea>
+			</td>
+		</tr>	
+		<tr>
+			<td class="titleTd">外链地址：</td>
+			<td><input type="text" id="title" name="seturl" placeholder="不填跳转站内链接"
+				value="${messageImg.seturl }" class="col-xs-12" autocomplete="off" /></td>
+		</tr>	
+		<tr>
+			<td colspan="4" align="center"><input name="content" id="content" type="hidden" /><div class="wysiwyg-editor" id="editor1"></div></td>
+		</tr>
+		
+		<%-- <tr>
+			<td colspan="4" align="center">
+			<textarea style="width: 670px;"
+					rows="28" id="content" name="content"
+					data-options="captions:'内容'">${messageImg.content }</textarea></td>
+		</tr> --%>
+	</table>
+	<div class="frame_close">
+		<input type="hidden" name="ismessage" value="1" />
+		<input type="hidden" name="messagetype" value="Img" />
+		<input type="hidden" name="servicetype" value="Text" />
+		<input type="hidden" name="issite" value="0" />
+		<input type="hidden" name="wechatid" value="${wechatId }" />
+		<input type="hidden" name="id" value="${keyword.id }" />
+		<input type="hidden" name="messageImgId" value="${messageImg.id }" />
+		<button class="btn btn-info" onclick="parent.closeFrame()" type="button"> 关闭</button>
+		<input type="submit" class="btn btn-primary" value="提交" />
 	</div>
-	<div data-options="region:'south',cache:false,border:false" class="windowBtnDiv" >
-		<div class="windowBtn">
-			<input type="hidden" name="wechatId" value="${wechatId }" />
-			<input type="hidden" name="id" value="${keyword.id }" />
-			<input type="hidden" name="messageImgId" value="${messageImg.id }" />
-			<input type="hidden" name="isMessage" value="1" />
-			<input type="hidden" name="messageType" value="Img" />
-			<input type="hidden" name="serviceType" value="Text" />
-			<input type="hidden" name="isSite" value="0" />
-			<input type="button" class="btnSubmit" name="submitBtn" onclick="checkKeyword('messageImgForm')">
-			<input type="button" class="btnClose"  name="closeBtn" onclick="closeFrame();">
-		</div>
-	</div>
-</form>
-</div>
-<script>
-var module = '${module}';
-var wechatId = '${wechatId}';
-var keywordId = '${keyword.id }';
-$(function(){
-	window.editor = KindEditor.create('#content',{height : '300px'});
-	initUploadButton("uploadButton", "photoImg", "accessoryIds",'<%=ConfigUtil.MODULE_WECHAT_IMG %>', 'image', 3*1024*1024, 200, 50,true);
+	</form>
+</div><!-- /.row -->
+<jsp:include page="../../include/footer-js.jsp" />
+<script type="text/javascript">
+var layer;
+layui.use(['layer', 'form'], function(){
+	layer = layui.layer;
 });
+var hasAccessory = '${not empty accessory}';
 function submitHandler(obj){
-	if(obj.success){
-		parent.reloadList();
-		closeFrame();
+	if (obj.success) {
+		parent.pageReload();
+		parent.closeFrame();
+	} else {
+		layer.alert(obj.desc,{skin: 'layui-layer-lan',closeBtn: 0 });
 	}
 }
-
-function checkKeyword(formId){
-	var keyword = $('#keyword').val();
-	var isValid = $('#keyword').validatebox('isValid');
-	if (isValid) {
-		$.post('${ctx}/user/keyword/checkKeyword',{module:module,keywordId:keywordId,keyword:keyword,wechatId:wechatId},function(data){
-			if(!data.success){
-				layer.alert(data.checkKeyword);
-			} else {
-				if(formId){
-					editor.sync();
-					formSubmit(formId);
+jQuery(function($) {
+	$('#editor1').ace_wysiwyg().prev().addClass('wysiwyg-style2');
+	/* {
+		toolbar:
+		[
+			'font',
+			null,
+			'fontSize',
+			null,
+			{name:'bold', className:'btn-info'},
+			{name:'italic', className:'btn-info'},
+			{name:'strikethrough', className:'btn-info'},
+			{name:'underline', className:'btn-info'},
+			null,
+			{name:'insertunorderedlist', className:'btn-success'},
+			{name:'insertorderedlist', className:'btn-success'},
+			{name:'outdent', className:'btn-purple'},
+			{name:'indent', className:'btn-purple'},
+			null,
+			{name:'justifyleft', className:'btn-primary'},
+			{name:'justifycenter', className:'btn-primary'},
+			{name:'justifyright', className:'btn-primary'},
+			{name:'justifyfull', className:'btn-inverse'},
+			null,
+			{name:'createLink', className:'btn-pink'},
+			{name:'unlink', className:'btn-pink'},
+			null,
+			{name:'insertImage', className:'btn-success'},
+			null,
+			'foreColor',
+			null,
+			{name:'undo', className:'btn-grey'},
+			{name:'redo', className:'btn-grey'}
+		],
+		'wysiwyg': {
+			fileUploadError: showErrorAlert
+		}
+	} */
+	
+	 $('#userForm').validate({
+		focusInvalid: false,
+		submitHandler: function() {  
+			$("#content").val($("#editor1").html());
+			 formSubmit('userForm');
+        },
+		rules: {
+			keyword: {
+				required: true,
+				maxlength: 20
+			},
+			title:{
+				required: true,
+				maxlength: 50
+			},
+			description:{
+				maxlength:1000
+			},
+			seturl:{url:true}
+		},
+		errorPlacement: function(error, element) { //错误信息位置设置方法
+			var id = element.attr("id");
+			layer.tips(error.html(), '#' + id, {tips: [3, '#78BA32']});
+		}
+	});
+	 
+	 
+	 Dropzone.autoDiscover = false;
+		try {
+		  $(".dropzone").dropzone({
+			  url: "${ctx}/accessory/upload?module=wechatHead",
+		    paramName: "file", // The name that will be used to transfer the file
+		    thumbnailWidth: 80,
+			thumbnailHeight: 80,
+			parallelUploads: 20,
+			autoQueue: false, // Make sure the files aren't queued until manually added
+			clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+			maxFiles: 1,
+	        maxFilesize: 2,	// MB
+			addRemoveLinks : true,
+			dictDefaultMessage:'上传',
+			init: function() {
+				if (hasAccessory == 'true') {
+					var mockFile = {name: '${accessory.name}',size: '${accessory.filesize}'};
+					this.emit('addedfile', mockFile);
+			        this.emit('thumbnail', mockFile, '${accessory.url}');
+			        this.emit('success', mockFile);
+			        this.emit('processing', mockFile);
+			        this.emit('complete', mockFile);
+					this.options.maxFiles = this.options.maxFiles - 1;
+					$('.fileinput-button').hide();
 				}
-			}
-		},'json');
+			    this.on("success", function(file, data) {
+			    	$('.fileinput-button').hide();
+			    	$("#accessoryIds").val(data.id);
+	                //console.log("File " + file.name + "uploaded");
+	            });
+	            this.on("removedfile", function(file) {
+	            	$('.fileinput-button').show();
+	                //console.log("File " + file.name + "removed");
+	            });
+			  },
+			dictDefaultMessage : '',//'<span class="bigger-150 bolder"><i class="icon-caret-right red"></i> Dropiles</span>to upload \<span class="smaller-80 grey">(or click)</span> <br /> \<i class="upload-icon icon-cloud-upload blue icon-3x"></i>',
+			dictResponseError: 'Error while uploading file!',				
+			//change the previewTemplate to use Bootstrap progress bars
+			previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
+		  });
+		} catch(e) {
+		  alert('Dropzone.js does not support older browsers!');
+		}
+});
+
+function showErrorAlert (reason, detail) {
+	var msg='';
+	if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+	else {
+		console.log("error uploading file", reason, detail);
 	}
+	$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+	 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
 }
 </script>
 </body>

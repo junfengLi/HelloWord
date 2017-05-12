@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<jsp:include page="../css-js.jsp"></jsp:include>
+<jsp:include page="../../include/css-js.jsp" />
 </head>
 <body>
 	<div id="AdvanceDiv" class="easyui-layout" data-options="fit:true">

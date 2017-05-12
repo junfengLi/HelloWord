@@ -39,7 +39,11 @@
          and createTime &gt; #{createtime1,jdbcType=BIGINT}
       </if>
       <if test="createtime2 != null" >
-         and createTime &lt; #{createtime2,jdbcType=BIGINT}
+         and serviceType &lt; #{createtime2,jdbcType=BIGINT}
+      </if>
+      
+      <if test="notservicetype != null" >
+         and serviceType != #{notservicetype,jdbcType=BIGINT}
       </if>
     </where>
   </sql>

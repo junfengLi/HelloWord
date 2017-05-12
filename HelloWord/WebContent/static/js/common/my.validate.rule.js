@@ -51,7 +51,7 @@ jQuery.validator.addMethod('isOnlyLoginName', function(loginName, element) {
         });
     return ok;
 }, "登录名已被使用");
-/*jQuery.extend(jQuery.validator.messages, {
+jQuery.extend(jQuery.validator.messages, {
     required:"此项必填。",
     remote:"请修正此项。",
     email:"请输入一个合法的电子邮件地址。",
@@ -69,4 +69,4 @@ jQuery.validator.addMethod('isOnlyLoginName', function(loginName, element) {
     max:jQuery.validator.format("请输入一个小于或等于{0}的值。"),
     min:jQuery.validator.format("请输入一个大于或等于{0}的值。")
 });
-*/
+

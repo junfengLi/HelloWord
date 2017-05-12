@@ -4,31 +4,28 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<jsp:include page="../css-js.jsp"></jsp:include>
+<jsp:include page="../../include/css-js.jsp" />
 </head>
 <body>
-	<div id="AdvanceDiv" class="easyui-layout" data-options="fit:true">
-	<div data-options="region:'center',cache:false,border:false">
-		<table class="tableFormShow">
-			<tr >
-				<td width="25%" class="titleTd " >关键词：</td>
-				<td >${keyword.keyword }</td>
-			</tr>
-			<tr>
-				<td width="25%" class="titleTd " >回复内容：</td>
-				<td >${messageText.content }</td>
-			</tr>
-			<tr >
-				<td class="titleTd" width="25%">上次修改时间：</td>
-				<td colspan="3" width="70%" >${creatTime }</td>
-			</tr>	
-		</table>
+<div class="row">
+	<table  class="tableForm">
+		<tr >
+			<td width="45%" class="titleTd " >关键词：</td>
+			<td >${keyword.keyword }</td>
+		</tr>
+		<tr>
+			<td class="titleTd " >回复内容：</td>
+			<td >${messageText.content }</td>
+		</tr>
+		<tr >
+			<td class="titleTd" >上次修改时间：</td>
+			<td >${creatTime }</td>
+		</tr>	
+	</table>
+	<div class="frame_close">
+		<button class="btn btn-info" onclick="parent.closeFrame()" type="button"> 关闭</button>
 	</div>
-	<div data-options="region:'south',cache:false,border:false" class="windowBtnDiv" >
-		<div class="windowBtn">
-			<input type="button" class="btnClose"  name="closeBtn" onclick="closeFrame();">
-		</div>
-	</div>
-</div>
+</div><!-- /.row -->
+<jsp:include page="../../include/footer-js.jsp" />
 </body>
 </html>

@@ -9,10 +9,6 @@ import com.aliyun.oss.OSSClient;
 
 public class OssUploadUtil {
 	
-	private static String endpoint = "oss-cn-hangzhou.aliyuncs.com";
-	private static String accessKeyId = "LTAItMMSgMJlRSv0";
-	private static String accessKeySecret = "nmo60maXqGmqK1p75dTJL1XSpdEpex";
-	private static String bucketName = "2017demo";
 	
 	public static void main(String[] args) {
 //		System.out.println(generatePresignedUrl("ceshi/ceshi2.jpg"));
@@ -40,28 +36,24 @@ public class OssUploadUtil {
 	
 	public static Map<String, Object> putInputStreamToObject(InputStream inputStream, String objectKey){
 		Map<String, Object> map = new HashMap<String, Object>();
-		OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-		client.putObject(bucketName, objectKey, inputStream);
-		map.put("backUrl", getObjectUrl(objectKey));
-		client.shutdown();
 		return map;
 	}
 	
 	private static String getObjectUrl(String objectKey){
-		return "http://" + bucketName +"." + endpoint +"/" + objectKey;
+		return "";//"http://" + bucketName +"." + endpoint +"/" + objectKey;
 	}
 	
 	
 	
 	// 获取Bucket的存在信息
 	public static boolean creatBucket(String bucketName){
-		OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-		boolean exists = client.doesBucketExist(bucketName);
-		//如果没有则创建，如果有，则跳过
-		if (!exists) {
-			client.createBucket(bucketName);
-		}
-		client.shutdown();
+//		OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+//		boolean exists = client.doesBucketExist(bucketName);
+//		//如果没有则创建，如果有，则跳过
+//		if (!exists) {
+//			client.createBucket(bucketName);
+//		}
+//		client.shutdown();
 		return true;
 	}
 	

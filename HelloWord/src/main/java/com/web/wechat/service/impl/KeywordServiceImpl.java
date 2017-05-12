@@ -8,17 +8,13 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.web.commons.dao.BaseDao;
 import com.web.commons.jqgrid.UIPage;
-import com.web.commons.util.BeanCopyUtil;
 import com.web.commons.util.ConfigUtil;
 import com.web.commons.util.DateUtil;
-import com.web.manage.pojo.User;
 import com.web.upload.pojo.Accessory;
 import com.web.upload.service.AccessoryService;
 import com.web.wechat.dao.KeywordDao;
@@ -26,13 +22,10 @@ import com.web.wechat.pojo.Keyword;
 import com.web.wechat.pojo.MessageImage;
 import com.web.wechat.pojo.MessageImg;
 import com.web.wechat.pojo.MessageText;
-import com.web.wechat.pojo.MessageImg;
-import com.web.wechat.pojo.MessageText;
 import com.web.wechat.service.KeywordService;
 import com.web.wechat.service.MessageImageService;
 import com.web.wechat.service.MessageImgService;
 import com.web.wechat.service.MessageTextService;
-import com.web.wechat.util.KeywordUtil;
 import com.web.wechat.util.MessageTypeEnum;
 import com.web.wechat.util.ServiceTypeEnum;
 
@@ -90,8 +83,8 @@ public class KeywordServiceImpl implements KeywordService {
 			Map<String, Object> map = new HashMap<String, Object>();
 			String message = "", id = keyword2.getId(), Messagetype = keyword2.getMessagetype();
 			map.put("id", id);
-			map.put("keyword", KeywordUtil.changeKeyword(keyword2.getKeyword(),false));
-			map.put("Messagetype", MessageTypeEnum.getDescByKey(Messagetype));
+			map.put("keyword", keyword2.getKeyword());
+			map.put("messageType", MessageTypeEnum.getDescByKey(Messagetype));
 			map.put("module", Messagetype);
 			if (MessageTypeEnum.TEXT.getKey().equals(Messagetype)) {
 				MessageText messageText = messageTextService.findMessageTextByPid(id);
@@ -112,7 +105,7 @@ public class KeywordServiceImpl implements KeywordService {
 				}
 			}
 			map.put("message", message);
-			map.put("creatTime", DateUtil.getFormatDateTime(keyword2.getCreatetime()));
+			map.put("createTime", DateUtil.getFormatDateTime(keyword2.getCreatetime()));
 			
 			rows.add(map);
 		}

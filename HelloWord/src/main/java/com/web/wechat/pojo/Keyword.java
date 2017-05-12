@@ -25,7 +25,7 @@ public class Keyword  extends BasePage {
     
     private Long createtime1;
     private Long createtime2;
-    
+    private String notservicetype;
     
 
     public String getId() {
@@ -100,6 +100,14 @@ public class Keyword  extends BasePage {
 
 	public void setCreatetime2(Long createtime2) {
 		this.createtime2 = createtime2;
+	}
+
+	public String getNotservicetype() {
+		return notservicetype;
+	}
+
+	public void setNotservicetype(String notservicetype) {
+		this.notservicetype = notservicetype;
 	}
     
 }

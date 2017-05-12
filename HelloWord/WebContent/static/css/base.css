@@ -21,6 +21,31 @@ span.menubutton-name {padding-left: 20px; text-align: left; float: left;}
 .creat-menu-box button{background: #438EB9; border: 0px; line-height: 40px; height: 40px; color: #fff; width: 100px; cursor: pointer; margin-top: 20px; float: right;}
 .creat-menu-box button:hover{background: #5DA5CE;}
 
+
+
+/***************特殊消息处理****************/
+.keyword-center{ width: 840px; margin: auto; background: #fff; padding: 20px;}
+.keyword-center div {float: left; text-align: center; height: 40px; line-height: 40px;}
+.keyword-head { font-weight: 600; font-size: 14px; border-bottom: 1px #ccc solid; line-height: 40px;}
+.keyword-t{ clear: both;border-bottom: dashed #ccc 1px;width: 100%;}
+.keyword-serviceType { width: 200px;}
+.keyword-messageType { width: 100px;line-height: 25px !important;margin-top: 5px;}
+.keyword-time { width: 200px;}
+.keyword-hander {width: 300px;}
+
+/***************模板选择****************/
+a.wsite-menu { font-size: 16px; display: block; float: left; padding: 5px 10px; margin-left: 20px; margin-top: 10px; border: solid #ccc 1px; border-radius: 5px;}
+a.wsite-menu.on,a.wsite-menu:hover { background: #438EB9; color: #fff;}
+
+.wsite-demo-center { width: 890px; margin: auto;}
+.wsite-demo-box { float: left; width: 142px; border: 10px #FFFFFF solid; margin: 4px; border-radius: 5px;}
+.wsite-demo-box.on, .wsite-demo-box:hover { border: 10px #438EB9 solid;}
+.wsite-demo-box span.input-text { display: block; text-align: center; line-height: 20px;}
+.wsite-demo-box span,.wsite-demo-box img {cursor: pointer;}
+
+
+
+
 input[type=radio].ace+.lbl::before
 {
 	font-size:13px;

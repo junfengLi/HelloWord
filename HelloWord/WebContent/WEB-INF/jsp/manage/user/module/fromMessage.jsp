@@ -9,7 +9,7 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 <title></title>
-<jsp:include page="../css-js.jsp"></jsp:include>
+<jsp:include page="../../include/css-js.jsp" />de>
 </head>
 <body>
 <div id="fromMessage" class="easyui-layout" data-options="fit:true">

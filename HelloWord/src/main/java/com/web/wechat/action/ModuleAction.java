@@ -32,7 +32,6 @@ import com.web.wechat.pojo.Wechat;
 import com.web.wechat.service.KeywordService;
 import com.web.wechat.service.MessageImgService;
 import com.web.wechat.service.WechatService;
-import com.web.wechat.util.KeywordUtil;
 import com.web.wechat.util.WsiteDemoEnum;
 
 @Controller
@@ -103,9 +102,6 @@ public class ModuleAction {
 				}
 				if (IsOrEnum.SHI.getKey().equals(messageImg.getIsmessage())&&StringUtils.isNotBlank(messageImg.getKeywordid())) {
 					Keyword keyword = keywordService.findKeywordById(messageImg.getKeywordid());
-					if (keyword != null) {
-						keyword.setKeyword(KeywordUtil.changeKeyword(keyword.getKeyword(),false));
-					}
 					model.addAttribute("keyword", keyword);
 				}
 				model.addAttribute("messageImg", messageImg);
@@ -177,9 +173,6 @@ public class ModuleAction {
 				String keywordId = request.getParameter("keywordId");
 				keyword.setId(keywordId);
 			}
-			String keywordText = keyword.getKeyword();
-			keywordText = KeywordUtil.changeKeyword(keywordText, true);
-			keyword.setKeyword(keywordText);
 			keyword = keywordService.saveKeyword(keyword);
 			messageImg.setKeywordid(keyword.getId()); 
 			

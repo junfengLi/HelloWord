@@ -4,65 +4,75 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<jsp:include page="../css-js.jsp"></jsp:include>
+<jsp:include page="../../include/css-js.jsp" />
 </head>
 <body>
-	<div id="AdvanceDiv" class="easyui-layout" data-options="fit:true">
-<form id="messageKeywordForm" method="post" action="${ctx }/user/keyword/save">
-	<div data-options="region:'center',cache:false,border:false">
-		<table class="tableForm">
-			<tr >
-				<td width="30%" class="titleTd " ></td>
-				<td >${serviceTypeText }</td>
-			</tr>
-			<tr >
-				<td width="30%" class="titleTd " >关联关键词：</td>
-				<td >
-				<input class="easyui-validatebox" style="width:240px" name="messageType" id="messageType" 
-				data-options="required:true,validType:'maxlength[100]'" onblur="checkKeyword()" value="${keyword.messageType }"/></td>
-			</tr>
-		</table>
+<div class="row">
+	<form action="${ctx }/keyword/save" id="userForm" method="post">
+	<table  class="tableForm">
+		<tr >
+			<td width="30%" class="titleTd " ></td>
+			<td >${serviceTypeText }</td>
+		</tr>
+		<tr >
+			<td width="30%" class="titleTd " >关联关键词：</td>
+			<td >
+			<input type="text" id="messagetype" name="messagetype" placeholder="关联关键词"
+			  value="${keyword.messagetype }" class="col-xs-10 col-sm-5" autocomplete="off" />
+			</td>
+		</tr>
+	</table>
+	<div class="frame_close">
+	
+		<input type="hidden" name="wechatid" value="${wechatId }" />
+		<input type="hidden" name="id" value="${keyword.id }" />
+		<input type="hidden" name="messageTextId" value="${messageText.id }" />
+		<input type="hidden" name="servicetype" value="${serviceType }" />
+		<input type="hidden" name="keyword" value="${serviceType }" />
+		<button class="btn btn-info" onclick="parent.closeFrame()" type="button"> 关闭</button>
+		<input type="submit" class="btn btn-primary" value="提交" />
 	</div>
-	<div data-options="region:'south',cache:false,border:false" class="windowBtnDiv" >
-		<div class="windowBtn">
-			<input type="hidden" name="wechatId" value="${wechatId }" />
-			<input type="hidden" name="id" value="${keyword.id }" />
-			<input type="hidden" name="messageTextId" value="${messageText.id }" />
-			<input type="hidden" name="serviceType" value="${serviceType }" />
-			<input type="hidden" name="keyword" value="${serviceType }" />
-			<input type="button" class="btnSubmit" name="submitBtn" onclick="checkKeyword('messageKeywordForm')">
-			<input type="button" class="btnClose"  name="closeBtn" onclick="closeFrame();">
-		</div>
-	</div>
-</form>
-</div>
-<script>
-var module = '${module}';
-var wechatId = '${wechatId}';
-var keywordId = '${keyword.id }';
+	</form>
+</div><!-- /.row -->
+<jsp:include page="../../include/footer-js.jsp" />
+<script type="text/javascript">
+var layer;
+layui.use(['layer', 'form'], function(){
+	layer = layui.layer;
+});
+
 function submitHandler(obj){
-	if(obj.success){
-		parent.reloadList();
-		closeFrame();
+	if (obj.success) {
+		parent.pageReload();
+		parent.closeFrame();
+	} else {
+		layer.alert(obj.desc,{skin: 'layui-layer-lan',closeBtn: 0 });
 	}
 }
-
-function checkKeyword(formId){
-	var keyword = $('#messageType').val();
-	var isValid = $('#messageType').validatebox('isValid');
-	if (isValid) {
-		$.post('${ctx}/user/keyword/checkKeyword',{module:module,keywordId:keywordId,keyword:keyword,wechatId:wechatId},function(data){
-			if(!data.success){
-				layer.alert(data.checkKeyword);
-			} else {
-				if(formId){
-					formSubmit(formId);
-				}
+jQuery(function($) {
+	 $('#userForm').validate({
+		focusInvalid: false,
+		submitHandler: function() {  
+			 formSubmit('userForm');
+        },
+		rules: {
+			messagetype: {
+				required: true,
+				maxlength: 20
 			}
-		},'json');
-	} 
-	
-}
+		},
+		messages: {
+			messagetype:{
+				required:"请输入关联关键词",
+				maxlength: "最多输入{0}个字符"
+			}
+		},
+		errorPlacement: function(error, element) { //错误信息位置设置方法
+			var id = element.attr("id");
+			layer.tips(error.html(), '#' + id, {tips: [3, '#78BA32']});
+		}
+	});
+});
 </script>
 </body>
 </html>

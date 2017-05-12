@@ -138,13 +138,13 @@
 					</a>
 					<ul class="submenu">
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/query/forward?wechatId=${wechat.wechatid }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/keyword/query/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">普通消息处理</span>
 							</a>
 						</li>
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/special/forward?wechatId=${wechat.wechatid }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/keyword/special/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">特殊消息处理</span>
 							</a>

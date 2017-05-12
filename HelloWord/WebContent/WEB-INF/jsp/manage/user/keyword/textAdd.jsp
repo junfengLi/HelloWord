@@ -4,72 +4,76 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<jsp:include page="../css-js.jsp"></jsp:include>
+<jsp:include page="../../include/css-js.jsp" />
 </head>
 <body>
-	<div id="AdvanceDiv" class="easyui-layout" data-options="fit:true">
-<form id="messageTextForm" method="post" action="${ctx }/user/keyword/save">
-	<div data-options="region:'center',cache:false,border:false">
-		<table class="tableForm">
-			<tr >
-				<td width="20%" class="titleTd " >关键词：</td>
-				<td >
-				<input class="easyui-validatebox" style="width:240px" name="keyword" id="keyword" 
-				data-options="required:true,validType:'maxlength[100]'" onblur="checkKeyword()" value="${keyword.keyword }"/></td>
-			</tr>
-			<tr >
-				<td style="line-height: 25px;color: #FA413F;text-align: right;padding-right: 50px;" colspan="2" >多个关键词用“，”隔开</td>
-			</tr>
-			<tr>
-				<td width="20%" class="titleTd " >回复内容：</td>
-				<td >
-					<textarea style="width: 240px; height:100px"  class="easyui-validatebox" 
-					 id="content" name="content"
-								data-options="required:true,validType:'maxlength[500]',captions:'内容'">${messageText.content }</textarea>				
-				</td>
-			</tr>
-		</table>
+<div class="row">
+	<form action="${ctx }/keyword/save" id="userForm" method="post">
+	<table  class="tableForm">
+		<tr>
+			<td width="25%" class="titleTd">关键词：</td>
+			<td  width="50%">
+			<input type="text" id="keyword" name="keyword" placeholder="关键词"
+			  value="${keyword.keyword }" class="col-xs-12 col-sm-5" autocomplete="off" />
+			</td>
+			<td width="15%"></td>
+		</tr>
+		<tr>
+			<td class="titleTd">回复内容：</td>
+			<td>
+			<textarea id="form-field-11" name="content" class="autosize-transition form-control" placeholder="回复内容"
+			 style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 70px;margin: 2px 0px;">${messageText.content }</textarea>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<div class="frame_close">
+		<input type="hidden" name="wechatid" value="${wechatId }" />
+		<input type="hidden" name="id" value="${keyword.id }" />
+		<input type="hidden" name="messageTextId" value="${messageText.id }" />
+		<input type="hidden" name="messagetype" value="Text" />
+		<input type="hidden" name="servicetype" value="Text" />
+		<button class="btn btn-info" onclick="parent.closeFrame()" type="button"> 关闭</button>
+		<input type="submit" class="btn btn-primary" value="提交" />
 	</div>
-	<div data-options="region:'south',cache:false,border:false" class="windowBtnDiv" >
-		<div class="windowBtn">
-			<input type="hidden" name="wechatId" value="${wechatId }" />
-			<input type="hidden" name="id" value="${keyword.id }" />
-			<input type="hidden" name="messageTextId" value="${messageText.id }" />
-			<input type="hidden" name="messageType" value="Text" />
-			<input type="hidden" name="serviceType" value="Text" />
-			<input type="button" class="btnSubmit" name="submitBtn" onclick="checkKeyword('messageTextForm')">
-			<input type="button" class="btnClose"  name="closeBtn" onclick="closeFrame();">
-		</div>
-	</div>
-</form>
-</div>
-<script>
-var module = '${module}';
-var wechatId = '${wechatId}';
-var keywordId = '${keyword.id }';
+	</form>
+</div><!-- /.row -->
+<jsp:include page="../../include/footer-js.jsp" />
+<script type="text/javascript">
+var layer;
+layui.use(['layer', 'form'], function(){
+	layer = layui.layer;
+});
+
 function submitHandler(obj){
-	if(obj.success){
-		parent.reloadList();
-		closeFrame();
+	if (obj.success) {
+		parent.pageReload();
+		parent.closeFrame();
+	} else {
+		layer.alert(obj.desc,{skin: 'layui-layer-lan',closeBtn: 0 });
 	}
 }
-
-function checkKeyword(formId){
-	var keyword = $('#keyword').val();
-	var isValid = $('#keyword').validatebox('isValid');
-	if (isValid) {
-		$.post('${ctx}/user/keyword/checkKeyword',{module:module,keywordId:keywordId,keyword:keyword,wechatId:wechatId},function(data){
-			if(!data.success){
-				layer.alert(data.checkKeyword);
-			} else {
-				if(formId){
-					formSubmit(formId);
-				}
+jQuery(function($) {
+	 $('#userForm').validate({
+		focusInvalid: false,
+		submitHandler: function() {  
+			 formSubmit('userForm');
+        },
+		rules: {
+			keyword: {
+				required: true,
+				maxlength: 20
+			},
+			content:{
+				maxlength:1000
 			}
-		},'json');
-	} 
-	
-}
+		},
+		errorPlacement: function(error, element) { //错误信息位置设置方法
+			var id = element.attr("id");
+			layer.tips(error.html(), '#' + id, {tips: [3, '#78BA32']});
+		}
+	});
+});
 </script>
 </body>
 </html>
