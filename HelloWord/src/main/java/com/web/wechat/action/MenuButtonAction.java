@@ -29,7 +29,7 @@ import com.web.wechat.service.MenuButtonService;
 import com.web.wechat.service.WechatService;
 
 @Controller
-@RequestMapping("/user/menu")
+@RequestMapping("/menu")
 public class MenuButtonAction {
 	@Autowired
 	private WechatService wechatService;
@@ -37,7 +37,7 @@ public class MenuButtonAction {
 	private MenuButtonService menuButtonService;
 
 	
-	private final static String BASE_PATH = "/user/menu/";
+	private final static String BASE_PATH = "/manage/user/menu/";
 	/**
 	 * query跳转
 	 * @author LI
@@ -51,14 +51,19 @@ public class MenuButtonAction {
 			@RequestParam(value="wechatId", defaultValue="")String wechatId, Model model,HttpServletRequest request) {	
 		model.addAttribute("wechatId", wechatId);
 		
-		if ("list".equals(module)) {
+		if ("query".equals(module)) {
 			List<EventButton> buttons = new ArrayList<EventButton>();
 			setListModel(buttons, wechatId);
 			model.addAttribute("buttons", buttons);
+		} else if ("add".equals(module)){
+			List<UINode> UINodes = selectCombo("", wechatId);
+			model.addAttribute("nodes", UINodes);
 		} else if ("edit".equals(module)){
 			String id = request.getParameter("id");
 			MenuButton menuButton = menuButtonService.findMenuButtonById(id);
 			model.addAttribute("button", menuButton);
+			List<UINode> UINodes = selectCombo(id, menuButton.getWechatid());
+			model.addAttribute("nodes", UINodes);
 			model.addAttribute("wechatId", menuButton.getWechatid());
 			module = "add";
 		}
@@ -114,10 +119,7 @@ public class MenuButtonAction {
 		return resultMap;
 	}
 	
-	@RequestMapping(value = "/selectCombo")
-	@ResponseBody
-	public List<UINode> selectCombo(@RequestParam(value = "id", defaultValue = "") String id,
-			@RequestParam(value = "wechatId", defaultValue = "") String wechatId){
+	private List<UINode> selectCombo(String id, String wechatId){
 		List<UINode> UINodes = new ArrayList<UINode>();
 		List<MenuButton> menuButtons = menuButtonService.findFZByWechatId(wechatId);
 		if (CollectionUtils.isNotEmpty(menuButtons)) {

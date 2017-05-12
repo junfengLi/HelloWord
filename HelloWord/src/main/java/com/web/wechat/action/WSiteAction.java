@@ -26,7 +26,7 @@ import com.web.wechat.service.WechatService;
 import com.web.wechat.util.WsiteDemoEnum;
 
 @Controller
-@RequestMapping("/user/wsite")
+@RequestMapping("/wsite")
 public class WSiteAction {
 	@Autowired
 	private WechatService wechatService;
@@ -34,7 +34,7 @@ public class WSiteAction {
 	private AccessoryService accessoryService;
 
 	
-	private final static String BASE_PATH = "/user/wsite/";
+	private final static String BASE_PATH = "/manage/user/wsite/";
 	/**
 	 * query跳转
 	 * @author LI

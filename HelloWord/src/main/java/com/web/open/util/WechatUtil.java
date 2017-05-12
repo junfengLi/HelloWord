@@ -51,6 +51,8 @@ public class WechatUtil {
 	 * @return
 	 */
 	public static AccessToken getToken(String wechatId){
+//		WechatService wechatService = SpringContext.getBean("wechatService", WechatService.class);
+		
 		WechatService wechatService = (WechatService) SpringContext.getBean("wechatService");
 		Wechat wechat = wechatService.findByWechatId(wechatId);
 		if (wechat != null) {

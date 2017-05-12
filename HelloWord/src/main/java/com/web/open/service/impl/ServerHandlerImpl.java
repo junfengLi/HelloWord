@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.web.commons.util.ConfigUtil;
 import com.web.commons.util.LogUtil;
@@ -35,7 +36,7 @@ import net.sf.json.JSONObject;
  * ClassName:ServerHandlerImpl
  * @Date	 2015	2015年8月26日		下午2:58:22
  */
-@Component("serverHandler")
+@Service("serverHandler")
 public class ServerHandlerImpl implements ServerHandler {
 
 	@Autowired

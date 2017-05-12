@@ -37,7 +37,7 @@ import com.web.wechat.util.MessageTypeEnum;
 import com.web.wechat.util.ServiceTypeEnum;
 
 
-@Component("keywordService")
+@Service("keywordService")
 @Transactional(propagation = Propagation.NOT_SUPPORTED,readOnly=true)
 public class KeywordServiceImpl implements KeywordService {
 	@Autowired

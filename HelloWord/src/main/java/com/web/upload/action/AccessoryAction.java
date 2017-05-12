@@ -18,12 +18,15 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.web.upload.pojo.Accessory;
+import com.web.upload.service.AccessoryService;
 import com.web.upload.util.OssUploadUtil;
 
 
@@ -31,6 +34,8 @@ import com.web.upload.util.OssUploadUtil;
 @Controller
 @RequestMapping("/accessory")
 public class AccessoryAction {
+	@Autowired
+	private AccessoryService accessoryService;
 	
 	Logger logger = Logger.getLogger(AccessoryAction.class);
 	
@@ -104,9 +109,18 @@ public class AccessoryAction {
                 			result.put("message", "上传文件失败.");
                 			return result;
                 		}
+                		Accessory accessory =new Accessory();
+                		accessory.setCreatetime(System.currentTimeMillis());
+                		accessory.setFilesize(String.valueOf(fileSize));
+                		accessory.setMinitype(fileType);
+                		accessory.setModule(module);
+                		accessory.setName(fileName);
+                		accessory.setUrl(url);
                 		
-                		//TODO 保存
-
+                		accessoryService.add(accessory);
+//                		String url = "redirect:/myproject/static/kindeditor/redirect.html?s=" + obj.toJSONString() + "#" + obj.toJSONString();
+//                        logger.info(String.format("上传成功文件路径 :%s", url));
+                		result.put("id", accessory.getId());
                 		result.put("error", 0);
                 		result.put("url", url);
                 		result.put("name", fileName);

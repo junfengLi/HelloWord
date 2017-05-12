@@ -75,6 +75,7 @@
 			<td class="titleTd">公众号头像：</td>
 			<td>
 			<div class="row">
+			<input type="hidden" name="accessoryIds" id="accessoryIds" />
 			<%-- <c:if test="${not empty accessory}"> 
 			  <img id="photoImg" width="80" height="80" style="display: block;" src="${accessory.url}" />
 			</c:if> --%>
@@ -191,7 +192,7 @@
 		Dropzone.autoDiscover = false;
 		try {
 		  $(".dropzone").dropzone({
-			  url: "${ctx}/accessory/upload?module=test",
+			  url: "${ctx}/accessory/upload?module=wechatHead",
 		    paramName: "file", // The name that will be used to transfer the file
 		    thumbnailWidth: 80,
 			thumbnailHeight: 80,
@@ -213,8 +214,9 @@
 					this.options.maxFiles = this.options.maxFiles - 1;
 					$('.fileinput-button').hide();
 				}
-			    this.on("success", function(file) {
+			    this.on("success", function(file, data) {
 			    	$('.fileinput-button').hide();
+			    	$("#accessoryIds").val(data.id);
 	                //console.log("File " + file.name + "uploaded");
 	            });
 	            this.on("removedfile", function(file) {
@@ -238,7 +240,7 @@
 		if(appId != '' && appSecred != ''){
 			$.post('${ctx}/usermanage/wechatCheckAppId',{appId:appId,appSecred:appSecred},function(data){
 				if(data.success){
-					$("#wechattype").val(data.wechattype);
+					$("#wechattype").val(data.wechatType);
 					$("#wechat_type_text").html(data.desc);
 				} else {
 					$("#appId").val('');

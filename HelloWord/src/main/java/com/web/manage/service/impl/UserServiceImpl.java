@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.commons.jqgrid.UIPage;
@@ -20,7 +21,7 @@ import com.web.manage.pojo.Role;
 import com.web.manage.pojo.User;
 import com.web.manage.service.UserService;
 
-@Component("userService")
+@Service("userService")
 @Transactional  
 public class UserServiceImpl implements UserService {
 	@Autowired 

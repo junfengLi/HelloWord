@@ -16,7 +16,7 @@ import com.web.wechat.dao.MessageImageDao;
 import com.web.wechat.pojo.MessageImage;
 import com.web.wechat.service.MessageImageService;
 
-@Component("messageImageService")
+@Service("messageImageService")
 @Transactional(propagation = Propagation.NOT_SUPPORTED,readOnly=true)
 public class MessageImageServiceImpl implements MessageImageService {
 	@Autowired

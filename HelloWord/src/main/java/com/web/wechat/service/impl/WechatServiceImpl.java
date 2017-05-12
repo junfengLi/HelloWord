@@ -7,6 +7,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.web.commons.dao.BaseDao;
 import com.web.wechat.dao.WechatDao;
@@ -14,7 +16,9 @@ import com.web.wechat.pojo.Wechat;
 import com.web.wechat.service.WechatService;
 import com.web.wechat.util.WsiteDemoEnum;
 
-@Component("wechatService")
+//@Component
+@Service("wechatService")
+@Transactional
 public class WechatServiceImpl implements WechatService {
 	@Autowired
 	private WechatDao wechatDao;

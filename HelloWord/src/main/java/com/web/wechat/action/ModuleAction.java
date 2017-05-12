@@ -36,7 +36,7 @@ import com.web.wechat.util.KeywordUtil;
 import com.web.wechat.util.WsiteDemoEnum;
 
 @Controller
-@RequestMapping("/user/module")
+@RequestMapping("/module")
 public class ModuleAction {
 	@Autowired
 	private WechatService wechatService;
@@ -47,7 +47,7 @@ public class ModuleAction {
 	@Autowired
 	private AccessoryService accessoryService;
 	
-	private final static String BASE_PATH = "/user/module/";
+	private final static String BASE_PATH = "/manage/user/module/";
 	/**
 	 * query跳转
 	 * @author LI

@@ -44,7 +44,7 @@ import com.web.wechat.util.MessageTypeEnum;
 import com.web.wechat.util.ServiceTypeEnum;
 
 @Controller
-@RequestMapping("/user/keyword")
+@RequestMapping("/keyword")
 public class KeywordAction {
 	@Autowired
 	private WechatService wechatService;
@@ -59,7 +59,7 @@ public class KeywordAction {
 	@Autowired
 	private AccessoryService accessoryService;
 	
-	private final static String BASE_PATH = "/user/keyword/";
+	private final static String BASE_PATH = "/manage/user/keyword/";
 	/**
 	 * query跳转
 	 * @author LI

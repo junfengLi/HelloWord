@@ -15,7 +15,7 @@ import com.web.wechat.pojo.MenuButton;
 import com.web.wechat.service.MenuButtonService;
 
 
-@Component("menuButtonService")
+@Service("menuButtonService")
 @Transactional(propagation = Propagation.NOT_SUPPORTED,readOnly=true)
 public class MenuButtonServiceImpl  implements MenuButtonService {
 	@Autowired
@@ -39,6 +39,13 @@ public class MenuButtonServiceImpl  implements MenuButtonService {
 
 	@Override
 	public boolean deleteById(String id) {
+		MenuButton menuButton = menuButtonDao.selectByPrimaryKey(id);
+		if (ConfigUtil.MENU_YJCD.equals(menuButton.getPid())) {
+			List<MenuButton> suButtons = findSubMenuByPid(id);
+			for (MenuButton menuButton2 : suButtons) {
+				deleteById(menuButton2.getId());
+			}
+		}
 		menuButtonDao.deleteByPrimaryKey(id);
 		return true;
 	}

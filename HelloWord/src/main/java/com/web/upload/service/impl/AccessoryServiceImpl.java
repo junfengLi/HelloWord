@@ -13,7 +13,7 @@ import com.web.upload.dao.AccessoryDao;
 import com.web.upload.pojo.Accessory;
 import com.web.upload.service.AccessoryService;
 
-@Component("accessoryService")
+@Service("accessoryService")
 @Transactional 
 public class AccessoryServiceImpl implements AccessoryService {
 	@Autowired

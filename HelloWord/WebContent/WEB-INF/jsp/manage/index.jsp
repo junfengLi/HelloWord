@@ -121,7 +121,7 @@
 							</a>
 						</li>
 							<li class="">
-								<a href="javascript:void(0);" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/menu/query/forward?wechatId=${wechatId }">
+								<a href="javascript:void(0);" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/menu/query/forward?wechatId=${wechat.wechatid }">
 									<i class="icon-double-angle-right"></i>
 									自定义菜单管理
 								</a>
@@ -138,13 +138,13 @@
 					</a>
 					<ul class="submenu">
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/query/forward?wechatId=${wechatId }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/query/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">普通消息处理</span>
 							</a>
 						</li>
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/special/forward?wechatId=${wechatId }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/keyword/special/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">特殊消息处理</span>
 							</a>
@@ -159,25 +159,25 @@
 					</a>
 					<ul class="submenu">
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/base/forward?wechatId=${wechatId }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/base/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">微站基本信息管理</span>
 							</a>
 						</li>
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/query/forward?wechatId=${wechatId }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/query/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">模板管理</span>
 							</a>
 						</li>
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/banner/forward?wechatId=${wechatId }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/wsite/banner/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">幻灯片图片</span>
 							</a>
 						</li>
 						<li class="" >
-							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/module/query/forward?wechatId=${wechatId }">
+							<a href="#" class="menu-text" onclick="return LoadPage(this,'main-content');" data-url="${ctx}/user/module/query/forward?wechatId=${wechat.wechatid }">
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text">模块列表</span>
 							</a>

@@ -14,7 +14,7 @@ import com.web.wechat.dao.MessageTextDao;
 import com.web.wechat.pojo.MessageText;
 import com.web.wechat.service.MessageTextService;
 
-@Component("messageTextService")
+@Service("messageTextService")
 @Transactional(propagation = Propagation.NOT_SUPPORTED,readOnly=true)
 public class MessageTextServiceImpl implements MessageTextService {
 	@Autowired

@@ -27,7 +27,7 @@ import com.web.wechat.pojo.Keyword;
 import com.web.wechat.pojo.MessageImg;
 import com.web.wechat.service.MessageImgService;
 
-@Component("messageImgService")
+@Service("messageImgService")
 @Transactional(propagation = Propagation.NOT_SUPPORTED,readOnly=true)
 public class MessageImgServiceImpl implements MessageImgService {
 	@Autowired
