@@ -163,7 +163,7 @@ function showKeyword(id,module){
 	if(module == "Text") {
 		openFrame('查看信息','${ctx}/keyword/text/Show/forward?wechatId='+wechatId+'&id=' + id,400,300);
 	} else if(module == "Img") {
-		openFrame('查看信息','${ctx}/keyword/img/Show/forward?wechatId='+wechatId+'&id=' + id,720,700);
+		openFrame('查看信息','${ctx}/keyword/img/Show/forward?wechatId='+wechatId+'&id=' + id,800,700);
 	} else if(module == "Image") {
 		openFrame('查看信息','${ctx}/keyword/image/Show/forward?wechatId='+wechatId+'&id=' + id,420,400);
 	}
@@ -172,7 +172,7 @@ function editKeyword(id,module){
 	if(module == "Text") {
 		openFrame('编辑信息','${ctx}/keyword/text/Add/forward?wechatId='+wechatId+'&id=' + id,400,300);
 	} else if(module == "Img") {
-		openFrame('编辑信息','${ctx}/keyword/img/Add/forward?wechatId='+wechatId+'&id=' + id,720,700);
+		openFrame('编辑信息','${ctx}/keyword/img/Add/forward?wechatId='+wechatId+'&id=' + id,800,700);
 	} else if(module == "Image") {
 		openFrame('编辑信息','${ctx}/keyword/image/Add/forward?wechatId='+wechatId+'&id=' + id,420,400);
 	}
@@ -191,7 +191,7 @@ function deleteKeyword(id){
 				layer.close(loadIndex);
 				if (data.success) {
 					layer.msg("删除成功");
-					reloadList();
+					pageReload();
 				} else {
 					layer.alert('删除失败，请刷新后重试！');
 				}

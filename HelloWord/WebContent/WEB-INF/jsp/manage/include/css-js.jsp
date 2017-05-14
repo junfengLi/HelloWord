@@ -37,7 +37,8 @@ function formSubmit(formId,noCallBack){
 		var index = layer.load(2, {
 			  shade: [0.1,'#ccc'] //0.1透明度的白色背景
 			});
-		$.post(_url, $(_form).serialize(), function (data) {
+		var datad = $(_form).serialize();
+		$.post(_url, datad, function (data) {
 			layer.close(index);
 			if(data.success){
 				//noCallBack不传走回调，传了就不走回调

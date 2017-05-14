@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.web.commons.jqgrid.UINode;
 import com.web.commons.util.ConfigUtil;
+import com.web.commons.util.JsonUtil;
 import com.web.upload.pojo.Accessory;
 import com.web.upload.service.AccessoryService;
 import com.web.wechat.pojo.Wechat;
@@ -68,9 +69,9 @@ public class WSiteAction {
 		} else if ("banner".equals(module)) {
 			List<Accessory> accessorylist = accessoryService.getByLinkIdModule(wechatId, ConfigUtil.MODULE_WECHAT_BANNER);
 			model.addAttribute("accessorylist", accessorylist);
-//			if (CollectionUtils.isNotEmpty(accessorylist)) {
-//				model.addAttribute("accessoryListJson", JsonUtil.convertToJosnWithQuotes(accessorylist));
-//			}
+			if (CollectionUtils.isNotEmpty(accessorylist)) {
+				model.addAttribute("accessoryListJson", JsonUtil.convertToJosnWithQuotes(accessorylist));
+			}
 		}
 		return BASE_PATH+module;
 	}
@@ -101,11 +102,15 @@ public class WSiteAction {
 	@RequestMapping(value = "/saveWechatBanner", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> saveWechatBanner(@RequestParam(value="accessoryIds", defaultValue = "")String accessoryIds, 
-			@RequestParam(value = "wechatId", defaultValue = "") String wechatId,
+			@RequestParam(value = "id", defaultValue = "") String id,
+			@RequestParam(value = "deleteAccessoryNames", defaultValue = "") String deleteAccessoryNames,
 			HttpServletRequest request){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if (StringUtils.isNotBlank(accessoryIds)) {
-			accessoryService.updateLinkId(accessoryIds, wechatId);
+			accessoryService.updateLinkId(accessoryIds, id);
+		}
+		if (StringUtils.isNotBlank(accessoryIds)) {
+			accessoryService.deleteByAccessoryNames(deleteAccessoryNames, id);
 		}
 		
 		resultMap.put("success", true);

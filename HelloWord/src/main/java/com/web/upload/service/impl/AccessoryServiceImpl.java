@@ -80,6 +80,19 @@ public class AccessoryServiceImpl implements AccessoryService {
 		return null;
 	}
 
-
+	@Override
+	public void deleteByAccessoryNames(String deleteAccessoryNames, String id) {
+		String[] accessoryIdList = deleteAccessoryNames.split(";");
+		for (String name : accessoryIdList) {
+			Accessory accessory = getAccessoryById(id);
+			accessory.setLinkid(id);
+			accessory.setName(name);
+			List<Accessory> accessories = accessoryDao.selectByStatement(accessory);
+			for (Accessory accessory2 : accessories) {
+				accessoryDao.deleteByPrimaryKey(accessory2.getId());
+			}
+			
+		}
+	}
 
 }

@@ -12,26 +12,16 @@
 <title></title>
 </head>
 <body>
-<div id="particles">
-	<div class="intro">
-		<div class="manage-main">
-			<div class="manage-top">
-				微站基本信息管理
+<div class="page-content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="alert alert-block alert-success">
+				<span>微站基本信息</span>
 			</div>
-			<div class="manage-content">
-				<div class="manage-con-right">
-					<div class="m-hr"></div>
-					<div class="input-box">
-						<div class="con-t">
-							<span>*</span>微站链接地址：
-						</div>
-						<div class="input-con">
-							${common:getWsiteUrl(wechatId)}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+	<div class="page-header">
+		<h1>微站链接地址：<small>${common:getWsiteUrl(wechatId)}</small></h1>
 	</div>
 </div>
 </body>

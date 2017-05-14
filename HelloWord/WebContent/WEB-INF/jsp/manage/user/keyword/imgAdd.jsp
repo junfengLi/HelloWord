@@ -7,7 +7,7 @@
 <head>
 <jsp:include page="../../include/css-js.jsp" />
 </head>
-<body>
+<body style="background: #fff;">
 <div class="row">
 	<form action="${ctx }/keyword/save" id="userForm" method="post">
 	<table  class="tableForm">
@@ -18,15 +18,15 @@
 			  value="${keyword.keyword }" class="col-xs-12" autocomplete="off" />
 			</td>
 			<td width="15%" rowspan="5" class="titleTd">缩略图：</td>
-			<td  width="30%" rowspan="5">
+			<td  width="30%" rowspan="5" style="    padding-bottom: 20px;">
 			<div class="row" >
 			<input type="hidden" name="accessoryIds" id="accessoryIds" />
 				<div class="col-xs-10" >
 					<div id="dropzone">
 						<div class="fallback"></div>
-						<div class="dropzone"></div>
+						<div class="dropzone"><div class="fileinput-button icon-cloud-upload btn btn-info" style="float: right; width: 44px; height: 100px; white-space: inherit; margin-top: 132px;">上传照片</div></div>
 					</div><!-- PAGE CONTENT ENDS -->
-					<div class="fileinput-button icon-cloud-upload btn btn-info">上传照片</div>
+					
 				</div><!-- /.col -->
 			</div><!-- /.row -->
 			</td>
@@ -59,7 +59,7 @@
 				value="${messageImg.seturl }" class="col-xs-12" autocomplete="off" /></td>
 		</tr>	
 		<tr>
-			<td colspan="4" align="center"><input name="content" id="content" type="hidden" /><div class="wysiwyg-editor" id="editor1"></div></td>
+			<td colspan="4" align="center"><input name="content" id="content" type="hidden" /><div class="wysiwyg-editor" id="editor1">${messageImg.content }</div></td>
 		</tr>
 		
 		<%-- <tr>
@@ -147,25 +147,8 @@ jQuery(function($) {
 		focusInvalid: false,
 		submitHandler: function() {  
 			// 点击提交后处理: 
-			for (var i = 0; i < uploadFiles.length; i++) {
-			    var fileObj = uploadFiles[i];
-			    // 判断图片是否存在
-			    readFileIntoDataUrl(fileObj).done(function (dataUrl) {
-			        var imgTag = $("#editor").find("img[src='" + dataUrl + "']");
-			        if (imgTag.length > 0) {
-			            // 图片存在, 上传当前文件.
-			            // uploadImage方法为你的上传图片方法.
-			            var url = uploadImage(fileObj);
-			            imgTag.attr("src", url);
-			        }
-			    });
-			}
-			
-			
 			$("#content").val($("#editor1").html());
-			debugger;
-			alert($("#editor1").html());
-			// formSubmit('userForm');
+			formSubmit('userForm');
         },
 		rules: {
 			keyword: {
@@ -191,7 +174,7 @@ jQuery(function($) {
 	 Dropzone.autoDiscover = false;
 		try {
 		  $(".dropzone").dropzone({
-			  url: "${ctx}/accessory/upload?module=wechatHead",
+			  url: "${ctx}/accessory/upload?module=wechatImg",
 			//最大文件大小，单位是 MB  
 		    maxFilesize: 5,  
 		    //默认false。如果设为true，则会给文件添加上传取消和删除预览图片的链接  

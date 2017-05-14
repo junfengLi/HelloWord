@@ -30,4 +30,5 @@ public interface AccessoryService {
 	 */
 	void deleteById(String id);
 	boolean deleteByLinkId(String linkId);
+	void deleteByAccessoryNames(String deleteAccessoryNames, String id);
 }
