@@ -19,11 +19,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.web.commons.jqgrid.AdditionalParameters;
+import com.web.commons.jqgrid.Item;
+import com.web.commons.jqgrid.TreeRespVO;
 import com.web.commons.jqgrid.UINode;
 import com.web.commons.jqgrid.UIPage;
 import com.web.commons.util.ConfigUtil;
 import com.web.commons.util.DateUtil;
 import com.web.commons.util.IsOrEnum;
+import com.web.commons.util.UrlBase64Utils;
 import com.web.upload.pojo.Accessory;
 import com.web.upload.service.AccessoryService;
 import com.web.wechat.pojo.Keyword;
@@ -76,6 +80,11 @@ public class ModuleAction {
 		model.addAttribute("module", module);
 		Wechat wechat = wechatService.findByWechatId(wechatId);
 		model.addAttribute("wechat", wechat);
+		if ("menu".equals(module)) {
+			List<UINode> nodes = WsiteDemoEnum.getUINodesBySeq("list");
+			model.addAttribute("nodes", nodes);
+		}
+		
 		if (StringUtils.isNotBlank(id)) {
 			MessageImg messageImg = messageImgService.findMessageImgById(id);
 			if (messageImg != null) {
@@ -132,7 +141,6 @@ public class ModuleAction {
 			@RequestParam(value = "menuUid", defaultValue = "") String menuUid,
 			Model model,HttpServletRequest request,HttpServletResponse response){
 		MessageImg record = new MessageImg();
-		record.setMenuUidLike(menuUid + "%");
 		record.setIssite(IsOrEnum.SHI.getKey());
 		record.setWechatid(wechatId);
 		String createTimeStart = request.getParameter("createTimeStart");
@@ -152,6 +160,10 @@ public class ModuleAction {
 		//标题过滤
 		if (StringUtils.isNotBlank(title)) {
 			record.setTitle("%" +title +"%");
+		}
+		
+		if (StringUtils.isNotBlank(menuUid) && !"all".equals(menuUid)) {
+			record.setMenuUidLike(menuUid + "%");
 		}
 		
 		//标题模块类型
@@ -263,16 +275,71 @@ public class ModuleAction {
 	
 	@RequestMapping(value = "/selectTree", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UINode> selectTree(@RequestParam(value="id", defaultValue = "")String id,
+	public TreeRespVO selectTree(@RequestParam(value="id", defaultValue = "")String id,
 			@RequestParam(value="wechatId", defaultValue = "")String wechatId,HttpServletRequest request){
-		List<UINode> UINodes = new ArrayList<UINode>();
-		List<MessageImg> messageImgs = (List<MessageImg>) messageImgService.findMessageImgByMenuUid(id, wechatId, true, true);
-		if (CollectionUtils.isNotEmpty(messageImgs)) {
-			for (MessageImg messageImg : messageImgs) {
-				UINodes.add(new UINode(messageImg.getMenuuid(), messageImg.getTitle(), "closed"));
-			}
+		TreeRespVO vo = new TreeRespVO();  
+		List<Item> voItemList = new ArrayList<Item>();
+		if (StringUtils.isBlank(id)) {
+			Item item = new Item();  
+			item .setType("folder" );//有子节点  
+			item .setName("全部");  
+			AdditionalParameters adp = new AdditionalParameters();  
+            adp .setId("all");  
+            adp.setItemSelected(true);
+            item .setAdditionalParameters(adp);
+            voItemList .add(item);
+			vo.setData(voItemList);
+		} else if ("all".equals(id)) {
+			id = "";
+			List<MessageImg> messageImgs = messageImgService.findMessageImgByMenuUid(id, wechatId, true, true);
+	        if (CollectionUtils.isNotEmpty(messageImgs)) {
+	        	for (MessageImg messageImg : messageImgs) {
+	        		Item item = new Item();  
+	        		item .setName(messageImg .getTitle());  
+	        		List<MessageImg> submessageImgs = messageImgService.findMessageImgByMenuUid(messageImg.getMenuuid(), wechatId, true, true);
+	        		if (CollectionUtils.isEmpty(submessageImgs)) {
+	        			AdditionalParameters adp = new AdditionalParameters();  
+	                    adp .setId(messageImg.getMenuuid());  
+	                    item .setAdditionalParameters(adp );  
+	                    item .setType("item" );//无子节点  
+					} else {
+						 item .setType("folder" );//有子节点  
+	                     AdditionalParameters adp = new AdditionalParameters();  
+	                     adp .setId(messageImg.getMenuuid());  
+	                     item .setAdditionalParameters(adp );  
+					}
+	        		voItemList .add(item);  
+	        	}
+	        	vo.setData( voItemList ); 
+	        }
+		} else {
+			List<MessageImg> messageImgs = messageImgService.findMessageImgByMenuUid(id, wechatId, true, true);
+	        if (CollectionUtils.isNotEmpty(messageImgs)) {
+	        	for (MessageImg messageImg : messageImgs) {
+	        		Item item = new Item();  
+	        		item .setName(messageImg .getTitle());  
+	        		List<MessageImg> submessageImgs = messageImgService.findMessageImgByMenuUid(messageImg.getMenuuid(), wechatId, true, true);
+	        		if (CollectionUtils.isEmpty(submessageImgs)) {
+	        			AdditionalParameters adp = new AdditionalParameters();  
+	                    adp .setId(messageImg.getMenuuid());  
+	                    item .setAdditionalParameters(adp );  
+	                    item .setType("item" );//无子节点  
+					} else {
+						 item .setType("folder" );//有子节点  
+	                     AdditionalParameters adp = new AdditionalParameters();  
+	                     adp .setId(messageImg.getMenuuid());  
+	                     item .setAdditionalParameters(adp );  
+					}
+	        		voItemList .add(item);  
+	        	}
+	        	vo.setData( voItemList ); 
+	        }
 		}
-		return UINodes;
+		/*
+		 
+		}
+		*/
+		return vo;
 	}
 	
 }

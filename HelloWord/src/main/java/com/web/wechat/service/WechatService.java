@@ -13,5 +13,5 @@ public interface WechatService {
 	Wechat findById(String id);
 	Wechat findByUserId(String userId);
 	Wechat findByWechatId(String wechatId);
-	void setDemo(String wechatId, String demoType, String demo);
+	void saveDemo(String wechatId, String demo);
 }

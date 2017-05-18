@@ -34,14 +34,14 @@ span.menubutton-name {padding-left: 20px; text-align: left; float: left;}
 .keyword-hander {width: 300px;}
 
 /***************模板选择****************/
-a.wsite-menu { font-size: 16px; display: block; float: left; padding: 5px 10px; margin-left: 20px; margin-top: 10px; border: solid #ccc 1px; border-radius: 5px;}
+/* a.wsite-menu { font-size: 16px; display: block; float: left; padding: 5px 10px; margin-left: 20px; margin-top: 10px; border: solid #ccc 1px; border-radius: 5px;}
 a.wsite-menu.on,a.wsite-menu:hover { background: #438EB9; color: #fff;}
 
 .wsite-demo-center { width: 890px; margin: auto;}
 .wsite-demo-box { float: left; width: 142px; border: 10px #FFFFFF solid; margin: 4px; border-radius: 5px;}
 .wsite-demo-box.on, .wsite-demo-box:hover { border: 10px #438EB9 solid;}
 .wsite-demo-box span.input-text { display: block; text-align: center; line-height: 20px;}
-.wsite-demo-box span,.wsite-demo-box img {cursor: pointer;}
+.wsite-demo-box span,.wsite-demo-box img {cursor: pointer;} */
 
 
 
@@ -50,6 +50,8 @@ input[type=radio].ace+.lbl::before
 {
 	font-size:13px;
 }
+
+.myselected { color: #307ecc !important;}
 .dropzone{padding:0px;     min-height: 234px;}
 .block{display: block;}
 .main-content {margin-top: 45px;}

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.web.commons.jqgrid.UINode;
 import com.web.commons.jqgrid.UIPage;
 import com.web.commons.util.ConfigUtil;
 import com.web.commons.util.DateUtil;
@@ -40,6 +41,7 @@ import com.web.wechat.service.MessageTextService;
 import com.web.wechat.service.WechatService;
 import com.web.wechat.util.MessageTypeEnum;
 import com.web.wechat.util.ServiceTypeEnum;
+import com.web.wechat.util.WsiteDemoEnum;
 
 @Controller
 @RequestMapping("/keyword")
@@ -108,7 +110,10 @@ public class KeywordAction {
 			model.addAttribute("serviceType", serviceType);
 			model.addAttribute("serviceTypeText", ServiceTypeEnum.getDescByKey(serviceType));
 		}
-		
+		if ("img".equals(module)) {
+			List<UINode> nodes = WsiteDemoEnum.getUINodesBySeq("content");
+			model.addAttribute("nodes", nodes);
+		}
 		if (StringUtils.isNotBlank(id)) {
 			Keyword keyword = keywordService.findKeywordById(id);
 			if (keyword != null) {
@@ -156,6 +161,7 @@ public class KeywordAction {
 						MessageText messageText = messageTextService.findMessageTextByPid(pid);
 						model.addAttribute("messageText", messageText);
 					} else if ("img".equals(module)) {
+						
 						MessageImg messageImg = messageImgService.findMessageImgByKeywordId(pid);
 						if (messageImg != null) {
 							Accessory accessory = new Accessory();

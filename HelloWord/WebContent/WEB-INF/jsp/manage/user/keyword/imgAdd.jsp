@@ -98,51 +98,7 @@ function submitHandler(obj){
 	}
 }
 jQuery(function($) {
-	
-	var uploadFiles = [];
-	$("#picture-select").change(function () {
-	    $.each(this.files, function (index, fileObj) {
-	        uploadFiles.push(fileObj);
-	    });
-	});
 	$('#editor1').ace_wysiwyg().prev().addClass('wysiwyg-style2');
-	/* {
-		toolbar:
-		[
-			'font',
-			null,
-			'fontSize',
-			null,
-			{name:'bold', className:'btn-info'},
-			{name:'italic', className:'btn-info'},
-			{name:'strikethrough', className:'btn-info'},
-			{name:'underline', className:'btn-info'},
-			null,
-			{name:'insertunorderedlist', className:'btn-success'},
-			{name:'insertorderedlist', className:'btn-success'},
-			{name:'outdent', className:'btn-purple'},
-			{name:'indent', className:'btn-purple'},
-			null,
-			{name:'justifyleft', className:'btn-primary'},
-			{name:'justifycenter', className:'btn-primary'},
-			{name:'justifyright', className:'btn-primary'},
-			{name:'justifyfull', className:'btn-inverse'},
-			null,
-			{name:'createLink', className:'btn-pink'},
-			{name:'unlink', className:'btn-pink'},
-			null,
-			{name:'insertImage', className:'btn-success'},
-			null,
-			'foreColor',
-			null,
-			{name:'undo', className:'btn-grey'},
-			{name:'redo', className:'btn-grey'}
-		],
-		'wysiwyg': {
-			fileUploadError: showErrorAlert
-		}
-	} */
-	
 	 $('#userForm').validate({
 		focusInvalid: false,
 		submitHandler: function() {  
@@ -210,32 +166,19 @@ jQuery(function($) {
 			    this.on("success", function(file, data) {
 			    	$('.fileinput-button').hide();
 			    	$("#accessoryIds").val(data.id);
-	                //console.log("File " + file.name + "uploaded");
 	            });
 	            this.on("removedfile", function(file) {
 	            	$('.fileinput-button').show();
-	                //console.log("File " + file.name + "removed");
 	            });
 			  },
 			dictDefaultMessage : '',//'<span class="bigger-150 bolder"><i class="icon-caret-right red"></i> Dropiles</span>to upload \<span class="smaller-80 grey">(or click)</span> <br /> \<i class="upload-icon icon-cloud-upload blue icon-3x"></i>',
 			dictResponseError: 'Error while uploading file!',				
-			//change the previewTemplate to use Bootstrap progress bars
 			previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
 		  });
 		} catch(e) {
 		  alert('Dropzone.js does not support older browsers!');
 		}
 });
-
-function showErrorAlert (reason, detail) {
-	var msg='';
-	if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
-	else {
-		console.log("error uploading file", reason, detail);
-	}
-	$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
-	 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
-}
 </script>
 </body>
 </html>

@@ -123,7 +123,7 @@ public class MessageImgServiceImpl implements MessageImgService {
 				map.put("module", "模块内容");
 			}
 			map.put("imgSort", messageImg.getImgsort());
-			map.put("creatTime", DateUtil.getFormatDateTime(messageImg.getCreatetime()));
+			map.put("updateTime", DateUtil.getFormatDateTime(messageImg.getUpdatetime()));
 			map.put("isMessage", messageImg.getIsmessage());
 			map.put("isMenu", messageImg.getIsmenu());
 			map.put("menuUid", messageImg.getMenuuid());

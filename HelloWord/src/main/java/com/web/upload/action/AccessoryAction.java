@@ -202,6 +202,23 @@ public class AccessoryAction {
         return null;
     }
 	
+	
+	@RequestMapping({ "/getAccessorys" })
+	@ResponseBody
+	public Map<String, Object> getAccessorys(@RequestParam("linkId") String linkId,
+			@RequestParam("module") String module) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			List<Accessory> accessorys = accessoryService.getByLinkIdModule(linkId, module);
+			result.put("accessory", accessorys);
+			result.put("success", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("success", Boolean.valueOf(false));
+		}
+		return result;
+	}
+	
 	@RequestMapping({ "/delete" })
 	@ResponseBody
 	public Map<String, Object> delete(@RequestParam("accessoryId") String accessoryId) {

@@ -51,12 +51,16 @@ public class WSiteAction {
 			Model model,HttpServletRequest request) {	
 		model.addAttribute("wechatId", wechatId);
 		if ("query".equals(module)) {
-			if (StringUtils.isBlank(demoType)) {
-				demoType = WsiteDemoEnum.INDEX.getKey();
-			}
+			Wechat wechat = wechatService.findByWechatId(wechatId);
+			model.addAttribute("wechat", wechat);
 			List<UINode> UINodes = WsiteDemoEnum.getUINodesBySeq(WsiteDemoEnum.MENU);
-			model.addAttribute("demoType", demoType);
-			model.addAttribute("UINodes", UINodes);
+			model.addAttribute("nodes", UINodes);
+			for (UINode uiNode : UINodes) {
+				demoType = uiNode.getId();
+				List<UINode> subUINodes = WsiteDemoEnum.getUINodesBySeq(demoType);
+				model.addAttribute(uiNode.getId(), subUINodes);
+			}
+			
 		} else if ("list".equals(module)) {
 			Wechat wechat = wechatService.findByWechatId(wechatId);
 			model.addAttribute("wechat", wechat);
@@ -65,13 +69,13 @@ public class WSiteAction {
 			}
 			List<UINode> UINodes = WsiteDemoEnum.getUINodesBySeq(demoType);
 			model.addAttribute("demoType", demoType);
-			model.addAttribute("UINodes", UINodes);
+			model.addAttribute("nodes", UINodes);
 		} else if ("banner".equals(module)) {
-			List<Accessory> accessorylist = accessoryService.getByLinkIdModule(wechatId, ConfigUtil.MODULE_WECHAT_BANNER);
-			model.addAttribute("accessorylist", accessorylist);
-			if (CollectionUtils.isNotEmpty(accessorylist)) {
-				model.addAttribute("accessoryListJson", JsonUtil.convertToJosnWithQuotes(accessorylist));
-			}
+//			List<Accessory> accessorylist = accessoryService.getByLinkIdModule(wechatId, ConfigUtil.MODULE_WECHAT_BANNER);
+//			model.addAttribute("accessorylist", accessorylist);
+//			if (CollectionUtils.isNotEmpty(accessorylist)) {
+//				model.addAttribute("accessoryListJson", JsonUtil.convertToJosnWithQuotes(accessorylist));
+//			}
 		}
 		return BASE_PATH+module;
 	}
@@ -80,12 +84,11 @@ public class WSiteAction {
 	
 	@RequestMapping(value = "/setWsiteDemo", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> checkKeyword(@RequestParam(value="demoType", defaultValue = "")String demoType, 
-			@RequestParam(value="demo", defaultValue="")String demo,
+	public Map<String, Object> checkKeyword(@RequestParam(value="demo", defaultValue="")String demo,
 			@RequestParam(value = "wechatId", defaultValue = "") String wechatId,
 			HttpServletRequest request){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		wechatService.setDemo(wechatId, demoType, demo);
+		wechatService.saveDemo(wechatId, demo);
 		
 		resultMap.put("success", true);
 		return resultMap;
@@ -102,15 +105,15 @@ public class WSiteAction {
 	@RequestMapping(value = "/saveWechatBanner", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> saveWechatBanner(@RequestParam(value="accessoryIds", defaultValue = "")String accessoryIds, 
-			@RequestParam(value = "id", defaultValue = "") String id,
+			@RequestParam(value = "wechatId", defaultValue = "") String wechatId,
 			@RequestParam(value = "deleteAccessoryNames", defaultValue = "") String deleteAccessoryNames,
 			HttpServletRequest request){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if (StringUtils.isNotBlank(accessoryIds)) {
-			accessoryService.updateLinkId(accessoryIds, id);
+			accessoryService.updateLinkId(accessoryIds, wechatId);
 		}
-		if (StringUtils.isNotBlank(accessoryIds)) {
-			accessoryService.deleteByAccessoryNames(deleteAccessoryNames, id);
+		if (StringUtils.isNotBlank(deleteAccessoryNames)) {
+			accessoryService.deleteByAccessoryNames(deleteAccessoryNames, wechatId);
 		}
 		
 		resultMap.put("success", true);

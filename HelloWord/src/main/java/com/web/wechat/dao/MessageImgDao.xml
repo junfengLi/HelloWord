@@ -79,7 +79,10 @@
       <if test="content != null" >
          and content = #{content,jdbcType=LONGVARCHAR}
       </if>
-       <if test="updatetime1 != null" >
+       <if test="menuUidLike != null" >
+         and menuUid like #{menuUidLike,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="updatetime1 != null" >
          and updatetime &gt; #{updatetime1,jdbcType=BIGINT}
       </if>
       <if test="updatetime2 != null" >

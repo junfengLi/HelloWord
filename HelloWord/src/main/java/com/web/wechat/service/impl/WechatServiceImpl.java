@@ -72,16 +72,18 @@ public class WechatServiceImpl implements WechatService {
 	}
 
 	@Override
-	public void setDemo(String wechatId, String demoType, String demo){
-		Wechat wechat = findByWechatId(wechatId);
-		if (WsiteDemoEnum.INDEX.getKey().equals(demoType)) {
-			wechat.setIndexdemo(demo);
-		} else if (WsiteDemoEnum.LIST.getKey().equals(demoType)) {
-			wechat.setListdemo(demo);
-		} else if (WsiteDemoEnum.CONTENT.getKey().equals(demoType)) {
-			wechat.setContentdemo(demo);
+	public void saveDemo(String wechatId, String demo){
+		if (StringUtils.isNotBlank(demo)) {
+			Wechat wechat = findByWechatId(wechatId);
+			if (demo.contains("index")) {
+				wechat.setIndexdemo(demo);
+			} else if (demo.contains("list")) {
+				wechat.setListdemo(demo);
+			} else if (demo.contains("con")) {
+				wechat.setContentdemo(demo);
+			}
+			wechatDao.updateByPrimaryKeySelective(wechat);
 		}
-		wechatDao.updateByPrimaryKeySelective(wechat);
 	}
 	
 
